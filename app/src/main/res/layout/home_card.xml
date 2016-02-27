@@ -102,18 +102,19 @@
                 style="?attr/borderlessButtonStyle"
                 android:text="View Challenge"
                 android:id="@+id/view_challenge_btn"/>
-            <Button
-                android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
-                android:drawableStart="@drawable/ic_photo_camera_black_24dp"
-                android:drawablePadding="4dp"
+            <ImageView
+                android:src="@drawable/ic_star_border_black_24dp"
+                android:tag="@drawable/ic_star_border_black_24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/join_now"
                 android:layout_below="@id/caption"
+                android:layout_alignBottom="@id/view_challenge_btn"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:id="@+id/join_now_btn"
-                style="?attr/borderlessButtonStyle" />
+                android:id="@+id/star"
+                android:padding="8dp"
+                android:tint="@color/ColorPrimary"
+                />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

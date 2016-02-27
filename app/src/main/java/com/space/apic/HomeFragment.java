@@ -156,8 +156,19 @@ public class HomeFragment extends Fragment {
             }
         } else if (requestCode == Constants.SELECT_PIC_REQUEST_CODE) {
             if (resultCode == getActivity().RESULT_OK) {
-                Uri imageUri = (Uri) data.getData();
+                Uri imageUri = data.getData();
                 Log.d("Image Location", imageUri.toString());
+                Utils.mostRecentPhoto = imageUri;
+
+                MainActivity activity = (MainActivity) getActivity();
+                MakeNewPostFragment fragment = new MakeNewPostFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commitAllowingStateLoss();
+                activity.activeFragment = fragment;
+                activity.navigationView.setCheckedItem(R.id.nav_challenge);
+
                 mCardData.add(0, new HomeCardData(Utils.getUsername(), "Just now", "Little Sheep Hotpot", "0.4mi", "YAY!!!", imageUri.toString()));
                 mAdapter.notifyDataSetChanged();
             } else if (resultCode == getActivity().RESULT_CANCELED) {
@@ -213,6 +224,9 @@ public class HomeFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
+            if (context instanceof MainActivity) {
+                ((MainActivity) context).activeFragment = this;
+            }
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");

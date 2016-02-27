@@ -6,10 +6,10 @@ package com.space.apic;
 public class Constants {
     public static final int TAKE_PIC_REQUEST_CODE = 0;
     public static final int SELECT_PIC_REQUEST_CODE = 1;
+    public static final int MAKE_NEW_POST_REQUEST_CODE = 2;
 
     public static final int READ_STORAGE_REQUEST_PERMISSION = 100;
     public static final int WRITE_STORAGE_REQUEST_PERMISSION = 101;
-
 
     public static final String FAVORITES_TAB_1 = "Coupons";
     public static final String FAVORITES_TAB_2 = "Challenges";
