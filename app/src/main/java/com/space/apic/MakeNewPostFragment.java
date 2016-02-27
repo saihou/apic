@@ -5,10 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.FileNotFoundException;
@@ -29,7 +31,7 @@ public class MakeNewPostFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String restaurantName;
     private String mParam2;
 
     private MainActivity activity;
@@ -64,7 +66,7 @@ public class MakeNewPostFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            restaurantName = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -75,22 +77,36 @@ public class MakeNewPostFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_make_new_post, container, false);
         ImageView imageToPost = (ImageView) view.findViewById(R.id.image_to_post);
-        Uri uri = Utils.mostRecentPhoto;
 
+        final Uri imageUri = Utils.mostRecentPhoto;
         try {
-            Bitmap bitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(uri));
+            Bitmap bitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(imageUri));
             imageToPost.setImageBitmap(bitmap);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
+        final EditText typedCaption = (EditText) view.findViewById(R.id.typed_caption);
+
+        FloatingActionButton done = (FloatingActionButton) view.findViewById(R.id.done_button);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String caption = typedCaption.getText().toString().trim();
+                HomeCardData newPost = new HomeCardData(Utils.getUsername(), "Just now", "Chocolate Origins",
+                                                "0.0mi", caption, imageUri.toString());
+                makeNewPost(newPost);
+            }
+        });
+
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void makeNewPost(HomeCardData cardData) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            Utils.mostRecentPost = cardData;
+            mListener.onFragmentInteraction(cardData);
         }
     }
 
@@ -123,6 +139,6 @@ public class MakeNewPostFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(HomeCardData newCard);
     }
 }

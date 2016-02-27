@@ -158,8 +158,23 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onFragmentInteraction(int fragmentId) {
+        System.out.println(fragmentId);
+        activeFragment = getSupportFragmentManager().findFragmentById(fragmentId);
+    }
+
+    @Override
+    public void onFragmentInteraction(HomeCardData cardData) {
+        HomeFragment fragment = new HomeFragment();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container,fragment);
+        fragmentTransaction.commit();
+        activeFragment = fragment;
+    }
+
+    @Override
     public void onFragmentInteraction(Uri uri) {
-        System.out.println(uri.toString());
+        System.out.println(uri);
     }
 
     @Override

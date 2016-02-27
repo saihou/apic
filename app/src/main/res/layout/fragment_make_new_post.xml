@@ -19,6 +19,7 @@
         android:layout_toRightOf="@id/image_to_post"
         android:layout_alignTop="@id/image_to_post"
         android:hint="Write a caption..."
+        android:id="@+id/typed_caption"
         />
 
     <View
@@ -36,6 +37,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:src="@drawable/ic_done_black_24dp"/>
+        android:src="@drawable/ic_done_black_24dp"
+        android:id="@+id/done_button"/>
 
 </RelativeLayout>
