@@ -1,5 +1,6 @@
 package com.space.apic;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -27,6 +32,8 @@ public class HistoryChallengeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private ArrayList<ChallengeCardData> placeHolderChallengeFavourites = new ArrayList<ChallengeCardData>();
+
     private OnFragmentInteractionListener mListener;
 
     public HistoryChallengeFragment() {
@@ -42,8 +49,8 @@ public class HistoryChallengeFragment extends Fragment {
      * @return A new instance of fragment FavoritesChallengeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HistoryChallengeFragment newInstance(String param1, String param2) {
-        HistoryChallengeFragment fragment = new HistoryChallengeFragment();
+    public static FavoritesChallengeFragment newInstance(String param1, String param2) {
+        FavoritesChallengeFragment fragment = new FavoritesChallengeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,10 +68,41 @@ public class HistoryChallengeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_challenge_favorites, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_challenge_list, container, false);
+        createPlaceHolderChallengeFavourites();
+        ViewGroup inclusionViewGroup = (ViewGroup)view.findViewById(R.id.inclusionlayout);
+        for(int i = 0; i < placeHolderChallengeFavourites.size(); i++) {
+            final int position = i;
+            View card = LayoutInflater.from(getContext()).inflate(R.layout.challenge_card, null);
+            Button joinButton = (Button) card.findViewById(R.id.challenge_join);
+            joinButton.setVisibility(View.GONE);
+            TextView merchantName = (TextView) card.findViewById(R.id.merchant_name);
+            TextView challengeDuration = (TextView) card.findViewById(R.id.challenge_duration);
+            merchantName.setText(placeHolderChallengeFavourites.get(i).merchaintName);
+            challengeDuration.setText(placeHolderChallengeFavourites.get(i).challengeDuration);
+            Button challengeDetailsButton = (Button) card.findViewById(R.id.challenge_details);
+            challengeDetailsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ChallengeCardData challengeData = placeHolderChallengeFavourites.get(position);
+                    Bundle bundle = new Bundle();
+                    //TODO: set bundle arguments for card
+                    FragmentManager fm = getActivity().getFragmentManager();
+                    ChallengeDetailsDialogFragment challengeDetailsDialog = new ChallengeDetailsDialogFragment();
+                    challengeDetailsDialog.setArguments(bundle);
+                    challengeDetailsDialog.show(fm, "challenge_details_dialog");
+                }
+            });
+            inclusionViewGroup.addView(card);
+        }
+        return view;
+    }
+
+    public void createPlaceHolderChallengeFavourites() {
+        placeHolderChallengeFavourites.add(new ChallengeCardData("FLUFFY", "6 days left", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
+        placeHolderChallengeFavourites.add(new ChallengeCardData("Naruto", "10 days left", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
+        placeHolderChallengeFavourites.add(new ChallengeCardData("Pokemon", "99 days left", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
     }
 
     // TODO: Rename method, update argument and hook method into UI event
