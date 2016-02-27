@@ -8,8 +8,7 @@ import android.net.Uri;
  */
 public class Utils {
     public static Uri mostRecentPhoto;
-    public static boolean canUseCamera = false;
-    public static boolean canWriteStorage = false;
+    public static HomeCardData mostRecentPost = null;
     public static boolean canReadStorage = false;
     public static Location lastKnownLocation = null;
 

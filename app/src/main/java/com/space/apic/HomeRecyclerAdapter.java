@@ -1,12 +1,8 @@
 package com.space.apic;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -19,13 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cocosw.bottomsheet.BottomSheet;
-
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by saihou on 2/19/16.
@@ -48,7 +39,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         TextView challengeDistance;
         TextView caption;
         Button viewChallenge;
-        Button joinNow;
+        ImageView favoriteIcon;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -60,7 +51,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             challengeRestaurant = (TextView) itemView.findViewById(R.id.challenge_restaurant);
             challengeDistance = (TextView) itemView.findViewById(R.id.challenge_distance);
             caption = (TextView) itemView.findViewById(R.id.caption);
-            joinNow = (Button) itemView.findViewById(R.id.join_now_btn);
+            favoriteIcon = (ImageView) itemView.findViewById(R.id.star);
             viewChallenge = (Button) itemView.findViewById(R.id.view_challenge_btn);
         }
     }
@@ -125,39 +116,52 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             }
         });
 
-        holder.joinNow.setOnClickListener(new View.OnClickListener() {
+        holder.favoriteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new BottomSheet.Builder(activity, R.style.BottomSheet_StyleDialog)
-                        .title("Choose how you want to upload a picture")
-                        .grid() // <-- important part
-                        .sheet(R.menu.home_join_bottom_sheet)
-                        .listener(new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (which == R.id.choose_gallery) {
-                                    Intent pickIntent = new Intent(Intent.ACTION_PICK,
-                                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                    activity.startActivityForResult(pickIntent, com.space.apic.Constants.SELECT_PIC_REQUEST_CODE);
-                                } else {
-                                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-
-                                    File imagesFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), activity.getString(R.string.app_name));
-                                    if (!imagesFolder.exists()) {
-                                        imagesFolder.mkdirs();
-                                    }
-                                    File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
-                                    Uri uriSavedImage = Uri.fromFile(image);
-                                    com.space.apic.Utils.mostRecentPhoto = uriSavedImage;
-
-                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-                                    activity.startActivityForResult(cameraIntent, com.space.apic.Constants.TAKE_PIC_REQUEST_CODE);
-                                }
-                            }
-                        }).show();
+                if (holder.favoriteIcon.getTag().toString().equals(String.valueOf(R.drawable.ic_star_black_24dp))) {
+                    holder.favoriteIcon.setImageResource(R.drawable.ic_star_border_black_24dp);
+                    holder.favoriteIcon.setTag(R.drawable.ic_star_border_black_24dp);
+                } else {
+                    holder.favoriteIcon.setImageResource(R.drawable.ic_star_black_24dp);
+                    holder.favoriteIcon.setTag(R.drawable.ic_star_black_24dp);
+                }
             }
         });
+
+//        holder.joinNow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                new BottomSheet.Builder(activity, R.style.BottomSheet_StyleDialog)
+//                        .title("Choose how you want to upload a picture")
+//                        .grid() // <-- important part
+//                        .sheet(R.menu.home_join_bottom_sheet)
+//                        .listener(new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                if (which == R.id.choose_gallery) {
+//                                    Intent pickIntent = new Intent(Intent.ACTION_PICK,
+//                                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                                    activity.startActivityForResult(pickIntent, com.space.apic.Constants.SELECT_PIC_REQUEST_CODE);
+//                                } else {
+//                                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//
+//                                    File imagesFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), activity.getString(R.string.app_name));
+//                                    if (!imagesFolder.exists()) {
+//                                        imagesFolder.mkdirs();
+//                                    }
+//                                    File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
+//                                    Uri uriSavedImage = Uri.fromFile(image);
+//                                    com.space.apic.Utils.mostRecentPhoto = uriSavedImage;
+//
+//                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+//                                    activity.startActivityForResult(cameraIntent, com.space.apic.Constants.TAKE_PIC_REQUEST_CODE);
+//                                }
+//                            }
+//                        }).show();
+//            }
+//        });
 
         holder.viewChallenge.setOnClickListener(new View.OnClickListener() {
             @Override

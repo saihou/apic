@@ -1,16 +1,12 @@
 package com.space.apic;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -98,20 +94,15 @@ public class HomeFragment extends Fragment {
         mAdapter = new HomeRecyclerAdapter(mCardData, (MainActivity) getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
-        //Marshmallow check
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(getActivity(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
-                        Constants.WRITE_STORAGE_REQUEST_PERMISSION);
-            } else {
-                Utils.canReadStorage = true;
-                Utils.canWriteStorage = true;
-            }
+
+        createPlaceholderData();
+
+        if (Utils.mostRecentPost != null) {
+            mCardData.add(0, Utils.mostRecentPost);
+            mAdapter.notifyDataSetChanged();
+            System.out.println(Utils.mostRecentPost.getPicture());
         } else {
-            //Put codes that are not MARSHMALLOW here
-            createPlaceholderData();
+            System.out.println("HIHI");
         }
 
         final SwipeRefreshLayout refreshView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
@@ -156,10 +147,15 @@ public class HomeFragment extends Fragment {
             }
         } else if (requestCode == Constants.SELECT_PIC_REQUEST_CODE) {
             if (resultCode == getActivity().RESULT_OK) {
-                Uri imageUri = (Uri) data.getData();
+                Uri imageUri = data.getData();
                 Log.d("Image Location", imageUri.toString());
-                mCardData.add(0, new HomeCardData(Utils.getUsername(), "Just now", "Little Sheep Hotpot", "0.4mi", "YAY!!!", imageUri.toString()));
-                mAdapter.notifyDataSetChanged();
+                Utils.mostRecentPhoto = imageUri;
+
+                MainActivity activity = (MainActivity) getActivity();
+                MakeNewPostFragment fragment = new MakeNewPostFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.commitAllowingStateLoss();
             } else if (resultCode == getActivity().RESULT_CANCELED) {
                 // User cancelled the image selection
             } else {
@@ -201,18 +197,13 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
+            mListener.onFragmentInteraction(getId());
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -237,6 +228,6 @@ public class HomeFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(int fragmentId);
     }
 }

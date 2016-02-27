@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity
         NearbyChallengeFragment.OnFragmentInteractionListener,
         FavoritesChallengeFragment.OnFragmentInteractionListener,
         HistoryChallengeFragment.OnFragmentInteractionListener,
+        MakeNewPostFragment.OnFragmentInteractionListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
@@ -97,9 +98,9 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == com.space.apic.R.id.action_settings) {
-            String url = String.format(Constants.EXPEDIA_REST_URL, Utils.getLastKnownLongitude(),
-                    Utils.getLastKnownLatitude(), Constants.EXPEDIA_API_KEY);
-            new FetchDataFromUrl(this, activeFragment).execute(url);
+                Intent pickIntent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickIntent, com.space.apic.Constants.SELECT_PIC_REQUEST_CODE);
             return true;
         }
 
@@ -139,10 +140,12 @@ public class MainActivity extends AppCompatActivity
 //            fragmentTransaction.commit();
         } else if (id == com.space.apic.R.id.nav_store) {
             getSupportActionBar().setTitle(com.space.apic.R.string.store);
-//            SettingsFragment fragment = new SettingsFragment();
-//            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.container,fragment);
-//            fragmentTransaction.commit();
+            StoreFragment fragment = new StoreFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container,fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            activeFragment = fragment;
         } else if (id == com.space.apic.R.id.nav_favorites) {
             getSupportActionBar().setTitle(com.space.apic.R.string.favorites);
             FavoritesFragment fragment = new FavoritesFragment();
@@ -159,8 +162,23 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(int fragmentId) {
+        System.out.println(fragmentId);
+        activeFragment = getSupportFragmentManager().findFragmentById(fragmentId);
+    }
 
+    @Override
+    public void onFragmentInteraction(HomeCardData cardData) {
+        HomeFragment fragment = new HomeFragment();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.commit();
+        activeFragment = fragment;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        System.out.println(uri);
     }
 
     @Override
