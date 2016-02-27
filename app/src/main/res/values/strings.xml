@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Adpic</string>
+    <string name="app_name">Apic</string>
 
     <string name="home">Home</string>
     <string name="challenge">Challenges</string>
@@ -13,7 +13,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello CHALLENGE NEARBY fragment</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="join_now">JOIN NOW</string>
     <string name="nearby">Nearby</string>
 </resources>

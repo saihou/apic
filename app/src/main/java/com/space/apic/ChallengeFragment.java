@@ -1,22 +1,12 @@
 package com.space.apic;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.esri.android.map.GraphicsLayer;
-import com.esri.android.map.MapView;
-import com.esri.android.map.event.OnStatusChangedListener;
-import com.esri.android.map.popup.Popup;
-import com.esri.android.map.popup.PopupContainer;
-import com.esri.core.geometry.Point;
-import com.esri.core.map.Graphic;
-import com.esri.core.symbol.SimpleMarkerSymbol;
 
 
 /**
@@ -36,8 +26,6 @@ public class ChallengeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String latitude;
     private String longitude;
-
-    MapView mapView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -77,31 +65,6 @@ public class ChallengeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_challenge_nearby, container, false);
-
-        mapView = (MapView) view.findViewById(R.id.map);
-
-        // the right way to get map resolution
-        mapView.setOnStatusChangedListener(new OnStatusChangedListener() {
-            private static final long serialVersionUID = 1L;
-
-            public void onStatusChanged(Object source, STATUS status) {
-                if (OnStatusChangedListener.STATUS.INITIALIZED == status && source == mapView) {
-                    if (latitude != null && longitude != null) {
-                        mapView.centerAt(Double.parseDouble(latitude), Double.parseDouble(longitude), true);
-                    } else {
-                        mapView.centerAt(Utils.getLastKnownLatitude(), Utils.getLastKnownLongitude(), true);
-                    }
-                    GraphicsLayer layer = new GraphicsLayer();
-                    mapView.addLayer(layer);
-                    PopupContainer popupContainer = new PopupContainer(mapView);
-                    Graphic graphic = new Graphic(new Point(Utils.getLastKnownLatitude(), Utils.getLastKnownLongitude()),
-                            new SimpleMarkerSymbol(Color.RED, 10, SimpleMarkerSymbol.STYLE.CIRCLE));
-                    layer.addGraphic(graphic);
-                    Popup popup = layer.createPopup(mapView, 1, graphic);
-                    popupContainer.addPopup(popup); // add popup to popup container
-                }
-            }
-        });
         return view;
     }
 
