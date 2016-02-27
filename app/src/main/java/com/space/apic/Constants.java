@@ -17,6 +17,8 @@ public class Constants {
     public static final String NEARBY = "Nearby";
     public static final String FAVORITES = "Favorites";
 
+    public static final String BUY_COUPON_TEXT = "%s PTS";
+
     public static final String EXPEDIA_API_KEY = "S2xmFgIxAnqeGGcdasM6SeIlHnkFW5Ak";
     public static String EXPEDIA_REST_URL = "http://terminal2.expedia.com/x/geo/features?within=5km&lng=%s&lat=%s&type=point_of_interest&apikey=%s";
 }

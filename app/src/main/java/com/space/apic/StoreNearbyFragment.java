@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 /**
@@ -59,7 +62,43 @@ public class StoreNearbyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_store_nearby, container, false);
+        View view = inflater.inflate(R.layout.fragment_store_nearby, container, false);
+        View card1 = view.findViewById(R.id.card_1);
+        View card2 = view.findViewById(R.id.card_2);
+        View card3 = view.findViewById(R.id.card_3);
+        View card4 = view.findViewById(R.id.card_4);
+//        View card5 = view.findViewById(R.id.card_5);
+//        View card6 = view.findViewById(R.id.card_6);
+//        View card7 = view.findViewById(R.id.card_7);
+//        View card8 = view.findViewById(R.id.card_8);
+
+        populateCardData(card1, "Chocolate Origins", "0.4mi", "Get $10 off our yummy one-pound Chocolate Cake",
+                            "200", R.drawable.coupon_chocolate_origin);
+        populateCardData(card2, "Gokart Racer", "0.2mi", "Extra 5 minutes of race time to any driving deal purchased!",
+                "250", R.drawable.coupon_gokart);
+        populateCardData(card3, "Sichuan Hotpot", "0.2mi", "Free Roasted Pork worth $14.99!",
+                "250", R.drawable.coupon_hotpot);
+        populateCardData(card4, "Arcadia Ski Resort", "0.4mi", "Free lift tickets for two!",
+                "1500", R.drawable.coupon_ski);
+//        populateCardData(card5, "The Black Horse", "0.2mi", "Margarita on the house! Worth $12.99!",
+//                "250", R.drawable.coupon_bar);
+//        populateCardData(card6, "Burgers With Love", "0.3mi", "Bacon-wrapped fries on any burger purchased!",
+//                "250", R.drawable.coupon_burger);
+        return view;
+    }
+
+    private void populateCardData(View card, String sName, String sDist, String sDesc, String cost, int dPic) {
+        TextView name = (TextView) card.findViewById(R.id.store_name);
+        TextView distance = (TextView) card.findViewById(R.id.store_distance);
+        TextView desc = (TextView) card.findViewById(R.id.store_desc);
+        Button buy = (Button) card.findViewById(R.id.buy_button);
+        ImageView pic = (ImageView) card.findViewById(R.id.store_picture);
+
+        name.setText(sName);
+        distance.setText(sDist);
+        desc.setText(sDesc);
+        pic.setImageResource(dPic);
+        buy.setText(String.format(Constants.BUY_COUPON_TEXT, cost));
     }
 
 }

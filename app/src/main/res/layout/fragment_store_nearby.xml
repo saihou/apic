@@ -12,17 +12,18 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <include layout="@layout/home_card">
+
+            <include layout="@layout/store_card"
+                android:id="@+id/card_1">
             </include>
-            <include layout="@layout/home_card">
+            <include layout="@layout/store_card"
+                android:id="@+id/card_2">
             </include>
-            <include layout="@layout/home_card">
+            <include layout="@layout/store_card"
+                android:id="@+id/card_3">
             </include>
-            <include layout="@layout/home_card">
-            </include>
-            <include layout="@layout/home_card">
-            </include>
-            <include layout="@layout/home_card">
+            <include layout="@layout/store_card"
+                android:id="@+id/card_4">
             </include>
         </LinearLayout>
 
