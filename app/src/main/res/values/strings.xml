@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Adpic</string>
+
+    <string name="home">Home</string>
+    <string name="challenge">Challenges</string>
+    <string name="following">Following</string>
+    <string name="favorites">Favorites</string>
+    <string name="store">Store</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="default_points">4000</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello CHALLENGE NEARBY fragment</string>
+    <string name="join_now">JOIN NOW</string>
+    <string name="nearby">Nearby</string>
+</resources>
