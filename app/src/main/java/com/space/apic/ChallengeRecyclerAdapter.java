@@ -12,7 +12,6 @@ import android.provider.MediaStore;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -124,6 +123,11 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
                         .listener(new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                String merchantName = holder.merchantName.getText().toString().trim();
+                                String merchantDistance = holder.challengeDistance.getText().toString().trim();
+                                Utils.mostRecentMerchantName = merchantName;
+                                Utils.mostRecentMerchantDistance = merchantDistance;
+
                                 if (which == R.id.choose_gallery) {
                                     Intent pickIntent = new Intent(Intent.ACTION_PICK,
                                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -136,11 +140,12 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
                                     if (!imagesFolder.exists()) {
                                         imagesFolder.mkdirs();
                                     }
-                                    File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
+                                    File image = new File(imagesFolder, "IMG_APIC_" + timeStamp + ".png");
                                     Uri uriSavedImage = Uri.fromFile(image);
                                     Utils.mostRecentPhoto = uriSavedImage;
 
                                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+                                    cameraIntent.putExtra("TEST", "ING");
                                     activity.startActivityForResult(cameraIntent, Constants.TAKE_PIC_REQUEST_CODE);
                                 }
                             }

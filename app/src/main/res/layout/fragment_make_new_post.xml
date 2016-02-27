@@ -2,10 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.space.apic.MakeNewPostFragment">
+    tools:context="com.space.apic.MakeNewPostFragment"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
     <ImageView
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:foregroundGravity="top"
@@ -20,13 +22,101 @@
         android:layout_alignTop="@id/image_to_post"
         android:hint="Write a caption..."
         android:id="@+id/typed_caption"
+        android:layout_marginLeft="8dp"
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/newpost_merchant_name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignBottom="@+id/image_to_post"
+        android:layout_toRightOf="@id/image_to_post"
+        android:background="@color/colorAccent2"
+        android:text="Location: "
+        android:layout_marginLeft="8dp"
+        android:padding="6dp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@id/newpost_merchant_name"
+        android:layout_marginTop="50dp"
+        android:id="@+id/share_label"
+        android:text="SHARE"
+        android:textStyle="bold"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:background="@android:color/darker_gray"
-        android:layout_below="@id/image_to_post"/>
+        android:layout_below="@id/share_label"
+        android:layout_marginTop="4dp"
+
+        android:id="@+id/view" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/view"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_twitter_grey"
+                android:id="@+id/icon_twitter"
+                android:layout_gravity="center_vertical"/>
+
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/toggle_twitter"
+                android:text="Twitter"
+                android:textOff="Twitter"
+                android:textOn="Twitter"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                style="?attr/borderlessButtonStyle"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_facebook_icon"
+                android:id="@+id/icon_facebook"
+                android:layout_gravity="center_vertical"
+                android:padding="10dp"/>
+
+            <ToggleButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/toggle_facebook"
+                android:text="Facebook"
+                android:textOff="Facebook"
+                android:textOn="Facebook"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                style="?attr/borderlessButtonStyle"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
@@ -39,5 +129,8 @@
         android:layout_marginRight="16dp"
         android:src="@drawable/ic_done_black_24dp"
         android:id="@+id/done_button"/>
+
+
+
 
 </RelativeLayout>

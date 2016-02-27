@@ -10,8 +10,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.io.FileNotFoundException;
 
@@ -31,8 +34,8 @@ public class MakeNewPostFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String restaurantName;
-    private String mParam2;
+    private String merchantName;
+    private String merchantDist;
 
     private MainActivity activity;
 
@@ -66,8 +69,8 @@ public class MakeNewPostFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            restaurantName = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            merchantName = getArguments().getString(ARG_PARAM1);
+            merchantDist = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -94,8 +97,43 @@ public class MakeNewPostFragment extends Fragment {
             public void onClick(View v) {
                 String caption = typedCaption.getText().toString().trim();
                 HomeCardData newPost = new HomeCardData(Utils.getUsername(), "Just now", "Chocolate Origins",
-                                                "0.0mi", caption, imageUri.toString());
+                        "0.0mi", caption, imageUri.toString());
                 makeNewPost(newPost);
+            }
+        });
+
+        TextView merchantNameTextView = (TextView) view.findViewById(R.id.newpost_merchant_name);
+        merchantNameTextView.setText(String.format(Constants.MAKE_NEW_POST_LOCATION, merchantName));
+
+        final ImageView twitterIcon = (ImageView) view.findViewById(R.id.icon_twitter);
+        ToggleButton twitterButton = (ToggleButton) view.findViewById(R.id.toggle_twitter);
+        twitterButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //connect to twitter
+                    buttonView.setTextColor(getResources().getColor(R.color.twitterBlue));
+                    twitterIcon.setImageResource(R.drawable.ic_twitter_blue);
+                } else {
+                    buttonView.setTextColor(getResources().getColor(R.color.black));
+                    twitterIcon.setImageResource(R.drawable.ic_twitter_grey);
+                }
+            }
+        });
+
+        final ImageView facebookIcon = (ImageView) view.findViewById(R.id.icon_facebook);
+        ToggleButton facebookButton = (ToggleButton) view.findViewById(R.id.toggle_facebook);
+        facebookButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //connect to facebook
+                    buttonView.setTextColor(getResources().getColor(R.color.facebookBlue));
+                    facebookIcon.setImageResource(R.drawable.ic_facebook_blue);
+                } else {
+                    buttonView.setTextColor(getResources().getColor(R.color.black));
+                    facebookIcon.setImageResource(R.drawable.ic_facebook_icon);
+                }
             }
         });
 

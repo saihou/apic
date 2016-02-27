@@ -11,4 +11,6 @@
     <color name="heartRed">#C00000</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="twitterBlue">#55ACEE</color>
+    <color name="facebookBlue">#3b5998</color>
 </resources>

@@ -6,6 +6,7 @@
     <string name="following">Following</string>
     <string name="favorites">Favorites</string>
     <string name="store">Store</string>
+    <string name="make_new_post">Respond to a Challenge...</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

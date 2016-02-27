@@ -3,14 +3,12 @@ package com.space.apic;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,35 +131,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.TAKE_PIC_REQUEST_CODE) {
-            if (resultCode == getActivity().RESULT_OK) {
-//                Uri imageUri = (Uri) data.getData();
-                Uri imageUri = Utils.mostRecentPhoto;
-                Log.d("Image Location", imageUri.toString());
-                mCardData.add(0, new HomeCardData(Utils.getUsername(), "Just now", "Little Sheep Hotpot", "0.4mi", "YAY!!!", imageUri.toString()));
-                mAdapter.notifyDataSetChanged();
-            } else if (resultCode == getActivity().RESULT_CANCELED) {
-                // User cancelled the image capture
-            } else {
-                // Image capture failed, advise user
-            }
-        } else if (requestCode == Constants.SELECT_PIC_REQUEST_CODE) {
-            if (resultCode == getActivity().RESULT_OK) {
-                Uri imageUri = data.getData();
-                Log.d("Image Location", imageUri.toString());
-                Utils.mostRecentPhoto = imageUri;
 
-                MainActivity activity = (MainActivity) getActivity();
-                MakeNewPostFragment fragment = new MakeNewPostFragment();
-                android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container, fragment);
-                fragmentTransaction.commitAllowingStateLoss();
-            } else if (resultCode == getActivity().RESULT_CANCELED) {
-                // User cancelled the image selection
-            } else {
-                // Image selection failed, advise user
-            }
-        }
     }
 
     @Override

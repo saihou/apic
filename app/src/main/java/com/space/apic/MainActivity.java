@@ -183,6 +183,34 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.TAKE_PIC_REQUEST_CODE ||
+                requestCode == Constants.SELECT_PIC_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                Uri imageUri;
+                if (requestCode == Constants.SELECT_PIC_REQUEST_CODE) {
+                    imageUri = data.getData();
+                    Utils.mostRecentPhoto = imageUri;
+                } else {
+                    imageUri = Utils.mostRecentPhoto;
+                }
+
+                Log.d("Image Location", imageUri.toString());
+
+                MakeNewPostFragment fragment = MakeNewPostFragment.newInstance(Utils.mostRecentMerchantName,
+                                                        Utils.mostRecentMerchantDistance);
+                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, fragment);
+                fragmentTransaction.commitAllowingStateLoss();
+
+                getSupportActionBar().setTitle(getString(R.string.make_new_post));
+            } else if (resultCode == RESULT_CANCELED) {
+                // User cancelled the image selection
+            } else {
+                // Image selection failed, advise user
+            }
+        }
+
         activeFragment.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
         Log.v(TAG, "onActivityResult");

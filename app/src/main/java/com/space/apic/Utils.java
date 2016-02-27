@@ -9,11 +9,14 @@ import android.net.Uri;
 public class Utils {
     public static Uri mostRecentPhoto;
     public static HomeCardData mostRecentPost = null;
+    public static String mostRecentMerchantName = null;
+    public static String mostRecentMerchantDistance = null;
+
     public static boolean canReadStorage = false;
     public static Location lastKnownLocation = null;
 
     public static String getUsername() {
-        return "nekonekonik";
+        return "LaunchHackathon";
     }
 
     public static void setLastKnownLocation(Location lastKnownLocation) {
