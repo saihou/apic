@@ -10,6 +10,9 @@ public class Constants {
     public static final int READ_STORAGE_REQUEST_PERMISSION = 100;
     public static final int WRITE_STORAGE_REQUEST_PERMISSION = 101;
 
+    public static final String CHALLENGE_TAB_1 = "Nearby";
+    public static final String CHALLENGE_TAB_2 = "Favourites";
+    public static final String CHALLENGE_TAB_3 = "History";
 
     public static final String FAVORITES_TAB_1 = "Coupons";
     public static final String FAVORITES_TAB_2 = "Challenges";
