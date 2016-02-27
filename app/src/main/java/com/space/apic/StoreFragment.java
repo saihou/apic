@@ -94,7 +94,7 @@ public class StoreFragment extends Fragment {
         {
             switch (position){
                 case 0 : return new StoreNearbyFragment();
-                case 1 : return new FavoritesChallengeFragment();
+                case 1 : return new StoreFavoritesFragment();
             }
             return null;
         }

@@ -1,8 +1,11 @@
 package com.space.apic;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,12 +96,35 @@ public class StoreNearbyFragment extends Fragment {
         TextView desc = (TextView) card.findViewById(R.id.store_desc);
         Button buy = (Button) card.findViewById(R.id.buy_button);
         ImageView pic = (ImageView) card.findViewById(R.id.store_picture);
+        final ImageView star = (ImageView) card.findViewById(R.id.store_star);
 
         name.setText(sName);
         distance.setText(sDist);
         desc.setText(sDesc);
         pic.setImageResource(dPic);
         buy.setText(String.format(Constants.BUY_COUPON_TEXT, cost));
+
+        star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                star.setImageResource(R.drawable.ic_star_black_24dp);
+            }
+        });
+
+        buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Confirm your purchase")
+                        .setMessage("Are you sure you want to purchase this coupon?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                Log.d("PurchaseConfirmation", "Yes");
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
+            }
+        });
     }
 
 }
