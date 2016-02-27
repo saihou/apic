@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity
         HomeFragment.OnFragmentInteractionListener,
         FavoritesFragment.OnFragmentInteractionListener,
         ChallengeFragment.OnFragmentInteractionListener,
+        NearbyChallengeFragment.OnFragmentInteractionListener,
         FavoritesChallengeFragment.OnFragmentInteractionListener,
+        HistoryChallengeFragment.OnFragmentInteractionListener,
         MakeNewPostFragment.OnFragmentInteractionListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
