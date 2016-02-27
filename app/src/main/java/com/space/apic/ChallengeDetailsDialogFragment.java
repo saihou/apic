@@ -11,6 +11,9 @@ import android.view.View;
  * Created by tankangsoon on 26/2/16.
  */
 public class ChallengeDetailsDialogFragment extends DialogFragment {
+
+    private ChallengeCardData challengeData;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

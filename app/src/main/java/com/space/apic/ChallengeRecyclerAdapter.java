@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.view.GestureDetectorCompat;
@@ -87,7 +88,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         ChallengeCardData data = mDataset.get(position);
@@ -150,9 +151,13 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         holder.viewChallengeDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ChallengeCardData challengeData = mDataset.get(position);
+                Bundle bundle = new Bundle();
+                //TODO: set budle arguments for card
                 FragmentManager fm = activity.getFragmentManager();
                 ChallengeDetailsDialogFragment challengeDetailsDialog = new ChallengeDetailsDialogFragment();
-                challengeDetailsDialog.show(fm,"challenge_details_dialog");
+                challengeDetailsDialog.setArguments(bundle);
+                challengeDetailsDialog.show(fm, "challenge_details_dialog");
             }
         });
     }
