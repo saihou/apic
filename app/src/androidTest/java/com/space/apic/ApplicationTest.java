@@ -1,4 +1,4 @@
-package com.saihou.adpic;
+package com.space.apic;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

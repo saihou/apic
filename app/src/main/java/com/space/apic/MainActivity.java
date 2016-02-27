@@ -1,4 +1,4 @@
-package com.saihou.adpic;
+package com.space.apic;
 
 import android.content.Intent;
 import android.location.Location;
@@ -36,19 +36,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(com.space.apic.R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(com.space.apic.R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.app_name);
+        getSupportActionBar().setTitle(com.space.apic.R.string.app_name);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(com.space.apic.R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, com.space.apic.R.string.navigation_drawer_open, com.space.apic.R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(com.space.apic.R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         // Create an instance of GoogleAPIClient.
@@ -62,17 +62,17 @@ public class MainActivity extends AppCompatActivity
 
 
         //set default to home
-        navigationView.setCheckedItem(R.id.nav_home);
+        navigationView.setCheckedItem(com.space.apic.R.id.nav_home);
         HomeFragment fragment = new HomeFragment();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.replace(com.space.apic.R.id.container, fragment);
         fragmentTransaction.commit();
         activeFragment = fragment;
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(com.space.apic.R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(com.space.apic.R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == com.space.apic.R.id.action_settings) {
             String url = String.format(Constants.EXPEDIA_REST_URL, Utils.getLastKnownLongitude(),
                     Utils.getLastKnownLatitude(), Constants.EXPEDIA_API_KEY);
             new FetchDataFromUrl(this, activeFragment).execute(url);
@@ -113,45 +113,45 @@ public class MainActivity extends AppCompatActivity
         if(menuItem.isChecked()) menuItem.setChecked(false);
         else menuItem.setChecked(true);
 
-        if (id == R.id.nav_home) {
-            getSupportActionBar().setTitle(R.string.app_name);
+        if (id == com.space.apic.R.id.nav_home) {
+            getSupportActionBar().setTitle(com.space.apic.R.string.app_name);
             HomeFragment fragment = new HomeFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.container, fragment);
+            fragmentTransaction.replace(com.space.apic.R.id.container, fragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             activeFragment = fragment;
-        } else if (id == R.id.nav_challenge) {
-            getSupportActionBar().setTitle(R.string.challenge);
+        } else if (id == com.space.apic.R.id.nav_challenge) {
+            getSupportActionBar().setTitle(com.space.apic.R.string.challenge);
             ChallengeFragment fragment = new ChallengeFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.container,fragment);
+            fragmentTransaction.replace(com.space.apic.R.id.container,fragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             activeFragment = fragment;
-        } else if (id == R.id.nav_following) {
-            getSupportActionBar().setTitle(R.string.following);
+        } else if (id == com.space.apic.R.id.nav_following) {
+            getSupportActionBar().setTitle(com.space.apic.R.string.following);
 //            SettingsFragment fragment = new SettingsFragment();
 //            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //            fragmentTransaction.replace(R.id.container,fragment);
 //            fragmentTransaction.commit();
-        } else if (id == R.id.nav_store) {
-            getSupportActionBar().setTitle(R.string.store);
+        } else if (id == com.space.apic.R.id.nav_store) {
+            getSupportActionBar().setTitle(com.space.apic.R.string.store);
 //            SettingsFragment fragment = new SettingsFragment();
 //            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //            fragmentTransaction.replace(R.id.container,fragment);
 //            fragmentTransaction.commit();
-        } else if (id == R.id.nav_favorites) {
-            getSupportActionBar().setTitle(R.string.favorites);
+        } else if (id == com.space.apic.R.id.nav_favorites) {
+            getSupportActionBar().setTitle(com.space.apic.R.string.favorites);
             FavoritesFragment fragment = new FavoritesFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.container,fragment);
+            fragmentTransaction.replace(com.space.apic.R.id.container,fragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             activeFragment = fragment;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(com.space.apic.R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

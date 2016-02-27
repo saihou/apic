@@ -1,4 +1,4 @@
-package com.saihou.adpic;
+package com.space.apic;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,8 +31,8 @@ import java.util.Date;
  * Created by saihou on 2/19/16.
  */
 public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
-    private ArrayList<HomeCardData> mDataset;
-    private MainActivity activity;
+    private ArrayList<com.space.apic.HomeCardData> mDataset;
+    private com.space.apic.MainActivity activity;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -66,7 +66,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public HomeRecyclerAdapter(ArrayList<HomeCardData> myDataset, MainActivity activity) {
+    public HomeRecyclerAdapter(ArrayList<com.space.apic.HomeCardData> myDataset, com.space.apic.MainActivity activity) {
         mDataset = myDataset;
         this.activity = activity;
     }
@@ -90,7 +90,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        HomeCardData data = mDataset.get(position);
+        com.space.apic.HomeCardData data = mDataset.get(position);
         holder.username.setText(data.getUsername());
         holder.time.setText(data.getTime());
         holder.challengeRestaurant.setText(data.getChallengeRestaurant());
@@ -138,7 +138,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                                 if (which == R.id.choose_gallery) {
                                     Intent pickIntent = new Intent(Intent.ACTION_PICK,
                                             android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                    activity.startActivityForResult(pickIntent, Constants.SELECT_PIC_REQUEST_CODE);
+                                    activity.startActivityForResult(pickIntent, com.space.apic.Constants.SELECT_PIC_REQUEST_CODE);
                                 } else {
                                     Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -149,10 +149,10 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                                     }
                                     File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
                                     Uri uriSavedImage = Uri.fromFile(image);
-                                    Utils.mostRecentPhoto = uriSavedImage;
+                                    com.space.apic.Utils.mostRecentPhoto = uriSavedImage;
 
                                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-                                    activity.startActivityForResult(cameraIntent, Constants.TAKE_PIC_REQUEST_CODE);
+                                    activity.startActivityForResult(cameraIntent, com.space.apic.Constants.TAKE_PIC_REQUEST_CODE);
                                 }
                             }
                         }).show();
@@ -163,7 +163,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             @Override
             public void onClick(View v) {
                 activity.getSupportActionBar().setTitle(R.string.challenge);
-                ChallengeFragment fragment = new ChallengeFragment();
+                com.space.apic.ChallengeFragment fragment = new com.space.apic.ChallengeFragment();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container,fragment);
                 fragmentTransaction.addToBackStack(null);
