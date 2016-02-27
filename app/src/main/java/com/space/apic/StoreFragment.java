@@ -66,7 +66,7 @@ public class StoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_challenge, container, false);
+        final View view = inflater.inflate(R.layout.fragment_store, container, false);
         tabLayout = (TabLayout) view.findViewById(R.id.store_tabs);
         viewPager = (ViewPager) view.findViewById(R.id.store_pager);
         viewPager.setAdapter(new StoreAdapter(getChildFragmentManager()));
@@ -93,7 +93,7 @@ public class StoreFragment extends Fragment {
         public Fragment getItem(int position)
         {
             switch (position){
-                case 0 : return new FavoritesChallengeFragment();
+                case 0 : return new StoreNearbyFragment();
                 case 1 : return new FavoritesChallengeFragment();
             }
             return null;
