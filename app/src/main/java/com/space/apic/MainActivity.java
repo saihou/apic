@@ -138,10 +138,12 @@ public class MainActivity extends AppCompatActivity
 //            fragmentTransaction.commit();
         } else if (id == com.space.apic.R.id.nav_store) {
             getSupportActionBar().setTitle(com.space.apic.R.string.store);
-//            SettingsFragment fragment = new SettingsFragment();
-//            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.container,fragment);
-//            fragmentTransaction.commit();
+            StoreFragment fragment = new StoreFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container,fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            activeFragment = fragment;
         } else if (id == com.space.apic.R.id.nav_favorites) {
             getSupportActionBar().setTitle(com.space.apic.R.string.favorites);
             FavoritesFragment fragment = new FavoritesFragment();
@@ -167,7 +169,7 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(HomeCardData cardData) {
         HomeFragment fragment = new HomeFragment();
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container,fragment);
+        fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
         activeFragment = fragment;
     }
