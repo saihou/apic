@@ -92,7 +92,6 @@ public class HomeFragment extends Fragment {
         mAdapter = new HomeRecyclerAdapter(mCardData, (MainActivity) getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
-
         createPlaceholderData();
 
         if (Utils.mostRecentPost != null) {
@@ -100,7 +99,7 @@ public class HomeFragment extends Fragment {
             mAdapter.notifyDataSetChanged();
             System.out.println(Utils.mostRecentPost.getPicture());
         } else {
-            System.out.println("HIHI");
+            System.out.println("Failed to display latest post!");
         }
 
         final SwipeRefreshLayout refreshView = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
@@ -122,10 +121,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void createPlaceholderData() {
-        mCardData.add(new HomeCardData("itssofluffy", "30 mins ago", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
-        mCardData.add(new HomeCardData("itssofluffy", "15 mins ago", "Koi Palace", "0.9 mi", "The 流沙包 here are really good!!!","content://media/external/images/media/12672"));
-        mCardData.add(new HomeCardData("itssofluffy", "27 mins ago", "In the forest", "5.4 mi", "Troll troll troll troll troll troll troll troll troll troll troll troll troll troll troll","content://media/external/images/media/12696"));
-        mCardData.add(new HomeCardData("imgonnadie", "Just now", "Chocolate Origins", "9001 mi", "After so long!! Haha #shoppingmadness","content://media/external/images/media/12673"));
+        mCardData.add(new HomeCardData("Ken Lee", "6 mins ago", "Sichuan Hotpot", "0.3 mi", "Can't live without hotpot!!",String.valueOf(R.drawable.post_hotpot)));
+        mCardData.add(new HomeCardData("stephanie_hall", "27 mins ago", "Real Escape Room", "0.8 mi", "Help us please!!!",String.valueOf(R.drawable.post_escaperoom)));
+        mCardData.add(new HomeCardData("Kimberly Chen", "Just now", "Gokart Racer", "1.4 mi", "Bringing out the Michael Schumacher in me LOL ", String.valueOf(R.drawable.post_gokart)));
+        mCardData.add(new HomeCardData("ashley_jenkins", "15 mins ago", "The Black Horse", "0.7 mi", "The drinks here are really good!!!",String.valueOf(R.drawable.post_bar)));
         mAdapter.notifyDataSetChanged();
     }
 

@@ -80,6 +80,11 @@ public class NearbyChallengeFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        if (Utils.mostRecentChallengeClicked != null) {
+            mLayoutManager.scrollToPosition(Utils.lookupChallenge());
+            Utils.mostRecentChallengeClicked = null;
+        }
+
         mCardData = new ArrayList<>();
         mAdapter = new ChallengeRecyclerAdapter(mCardData, (MainActivity) getActivity());
         mRecyclerView.setAdapter(mAdapter);
@@ -90,10 +95,10 @@ public class NearbyChallengeFragment extends Fragment {
     }
 
     private void createPlaceholderData() {
-        mCardData.add(new ChallengeCardData("merchantName1", "30 mins left", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
-        mCardData.add(new ChallengeCardData("merchantName2", "15 mins left", "Koi Palace", "0.9 mi", "The 流沙包 here are really good!!!", "content://media/external/images/media/12672"));
-        mCardData.add(new ChallengeCardData("merchantName3", "27 mins left", "In the forest", "5.4 mi", "Troll troll troll troll troll troll troll troll troll troll troll troll troll troll troll","content://media/external/images/media/12696"));
-        mCardData.add(new ChallengeCardData("merchantName4", "10 days left", "Chocolate Origins", "9001 mi", "After so long!! Haha #shoppingmadness","content://media/external/images/media/12673"));
+        ArrayList<ChallengeCardData> placeholderData = Utils.challengePlaceholderData;
+        for (ChallengeCardData item : placeholderData) {
+            mCardData.add(item);
+        }
         mAdapter.notifyDataSetChanged();
     }
 

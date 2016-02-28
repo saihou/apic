@@ -88,21 +88,29 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         holder.challengeDistance.setText(data.getChallengeDistance());
         holder.caption.setText(data.getCaption());
 
-        Uri uri = Uri.parse(data.getPicture());
-
+        Bitmap rawBitmap = null;
         try {
-            Bitmap bitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(uri));
-            int height = bitmap.getHeight();
-            int width = bitmap.getWidth();
-            int scale = 2;
-            if (width > 800) {
-                height = height/scale;
-                width = width/scale;
+            int picture = Integer.parseInt(data.getPicture());
+            rawBitmap = BitmapFactory.decodeResource(activity.getResources(), picture);
+        } catch (NumberFormatException e) {
+            Uri uri = Utils.mostRecentPhoto;
+            try {
+                rawBitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(uri));
+            } catch (FileNotFoundException err) {
+                e.printStackTrace();
             }
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
-            holder.picture.setImageBitmap(scaledBitmap);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } finally {
+            if (rawBitmap != null) {
+                int height = rawBitmap.getHeight();
+                int width = rawBitmap.getWidth();
+                int scale = 2;
+                if (width > 800) {
+                    height = height/scale;
+                    width = width/scale;
+                }
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(rawBitmap, width, height, false);
+                holder.picture.setImageBitmap(scaledBitmap);
+            }
         }
 
         holder.picture.setOnTouchListener(new View.OnTouchListener() {
@@ -137,45 +145,12 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             }
         });
 
-//        holder.joinNow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new BottomSheet.Builder(activity, R.style.BottomSheet_StyleDialog)
-//                        .title("Choose how you want to upload a picture")
-//                        .grid() // <-- important part
-//                        .sheet(R.menu.home_join_bottom_sheet)
-//                        .listener(new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                if (which == R.id.choose_gallery) {
-//                                    Intent pickIntent = new Intent(Intent.ACTION_PICK,
-//                                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                                    activity.startActivityForResult(pickIntent, com.space.apic.Constants.SELECT_PIC_REQUEST_CODE);
-//                                } else {
-//                                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//
-//                                    File imagesFolder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), activity.getString(R.string.app_name));
-//                                    if (!imagesFolder.exists()) {
-//                                        imagesFolder.mkdirs();
-//                                    }
-//                                    File image = new File(imagesFolder, "IMG_ADPIC_" + timeStamp + ".png");
-//                                    Uri uriSavedImage = Uri.fromFile(image);
-//                                    com.space.apic.Utils.mostRecentPhoto = uriSavedImage;
-//
-//                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-//                                    activity.startActivityForResult(cameraIntent, com.space.apic.Constants.TAKE_PIC_REQUEST_CODE);
-//                                }
-//                            }
-//                        }).show();
-//            }
-//        });
-
         holder.viewChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 activity.getSupportActionBar().setTitle(R.string.challenge);
-                com.space.apic.ChallengeFragment fragment = new com.space.apic.ChallengeFragment();
+                Utils.mostRecentChallengeClicked = holder.challengeRestaurant.getText().toString();
+                com.space.apic.ChallengeFragment fragment = new ChallengeFragment();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container,fragment);
                 fragmentTransaction.addToBackStack(null);

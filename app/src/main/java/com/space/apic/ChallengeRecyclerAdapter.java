@@ -13,7 +13,6 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,7 +22,6 @@ import android.widget.TextView;
 import com.cocosw.bottomsheet.BottomSheet;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -97,21 +95,21 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         holder.challengeDistance.setText(data.getChallengeDistance());
         holder.caption.setText(data.getCaption());
 
-        Uri uri = Uri.parse(data.getPicture());
-
         try {
-            Bitmap bitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(uri));
-            holder.picture.setImageBitmap(bitmap);
-        } catch (FileNotFoundException e) {
+            int picture = Integer.parseInt(data.getPicture());
+            Bitmap bitmap = BitmapFactory.decodeResource(activity.getResources(), picture);
+            int height = bitmap.getHeight();
+            int width = bitmap.getWidth();
+            int scale = 2;
+            if (width > 800) {
+                height = height/scale;
+                width = width/scale;
+            }
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+            holder.picture.setImageBitmap(scaledBitmap);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        holder.picture.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return holder.gestureDetector.onTouchEvent(event);
-            }
-        });
 
         holder.joinChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +156,6 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
             public void onClick(View v) {
                 ChallengeCardData challengeData = mDataset.get(position);
                 Bundle bundle = new Bundle();
-                //TODO: set budle arguments for card
                 FragmentManager fm = activity.getFragmentManager();
                 ChallengeDetailsDialogFragment challengeDetailsDialog = new ChallengeDetailsDialogFragment();
                 challengeDetailsDialog.setArguments(bundle);
