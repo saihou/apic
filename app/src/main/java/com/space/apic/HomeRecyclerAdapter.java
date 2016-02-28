@@ -39,7 +39,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         TextView challengeDistance;
         TextView caption;
         Button viewChallenge;
-        ImageView favoriteIcon;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -51,7 +50,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             challengeRestaurant = (TextView) itemView.findViewById(R.id.challenge_restaurant);
             challengeDistance = (TextView) itemView.findViewById(R.id.challenge_distance);
             caption = (TextView) itemView.findViewById(R.id.caption);
-            favoriteIcon = (ImageView) itemView.findViewById(R.id.star);
             viewChallenge = (Button) itemView.findViewById(R.id.view_challenge_btn);
         }
     }
@@ -128,19 +126,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 } else {
                     holder.heartIcon.setImageResource(R.drawable.ic_favorite_black_36dp);
                     holder.heartIcon.setTag(R.drawable.ic_favorite_black_36dp);
-                }
-            }
-        });
-
-        holder.favoriteIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (holder.favoriteIcon.getTag().toString().equals(String.valueOf(R.drawable.ic_star_black_24dp))) {
-                    holder.favoriteIcon.setImageResource(R.drawable.ic_star_border_black_24dp);
-                    holder.favoriteIcon.setTag(R.drawable.ic_star_border_black_24dp);
-                } else {
-                    holder.favoriteIcon.setImageResource(R.drawable.ic_star_black_24dp);
-                    holder.favoriteIcon.setTag(R.drawable.ic_star_black_24dp);
                 }
             }
         });
