@@ -3,12 +3,14 @@ package com.space.apic;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
+import com.github.jorgecastilloprz.FABProgressCircle;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -111,6 +114,13 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
             e.printStackTrace();
         }
 
+        holder.uberRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                floatingUberButtonBehavior();
+            }
+        });
+
         holder.joinChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +166,11 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
             public void onClick(View v) {
                 ChallengeCardData challengeData = mDataset.get(position);
                 Bundle bundle = new Bundle();
+                bundle.putString("merchantName",challengeData.merchaintName);
+                bundle.putString("challengeDuration",challengeData.challengeDuration);
+                bundle.putString("challengeDistance",challengeData.challengeDistance);
+                bundle.putString("caption",challengeData.caption);
+                bundle.putString("challengeRestaurant",challengeData.challengeRestaurant);
                 FragmentManager fm = activity.getFragmentManager();
                 ChallengeDetailsDialogFragment challengeDetailsDialog = new ChallengeDetailsDialogFragment();
                 challengeDetailsDialog.setArguments(bundle);
@@ -175,4 +190,43 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         return mDataset.size();
     }
 
+    private void floatingUberButtonBehavior() {
+        try {
+            PackageManager pm = activity.getApplicationContext().getPackageManager();
+            pm.getPackageInfo("com.ubercab", PackageManager.GET_ACTIVITIES);
+            String uri = "uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup=my_location&dropoff[latitude]=37.802374&dropoff[longitude]=-122.405818&dropoff[nickname]=Coit%20Tower&dropoff[formatted_address]=1%20Telegraph%20Hill%20Blvd%2C%20San%20Francisco%2C%20CA%2094133&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d";
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(uri));
+            activity.startActivity(intent);
+        } catch (PackageManager.NameNotFoundException e) {
+            // No Uber app! Open mobile website.
+            String url = "https://m.uber.com/sign-up?client_id=" + Constants.UBER_CLIENT_ID;
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            activity.startActivity(i);
+        }
+        FloatingActionButton uberFAB = (FloatingActionButton) activity.findViewById(R.id.uber_button);
+        uberFAB.setVisibility(View.VISIBLE);
+        final FABProgressCircle fabProgressCircle = (FABProgressCircle) activity.findViewById(R.id.fabProgressCircle);
+        fabProgressCircle.show();
+        Utils.isRiding = true;
+        fabProgressCircle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Go to Trip Experiences page
+            }
+        });
+        //after a while, uber arrives after a few seconds
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(60000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                fabProgressCircle.beginFinalAnimation();
+                Utils.isRiding = false;
+            }
+        }).start();
+    }
 }
