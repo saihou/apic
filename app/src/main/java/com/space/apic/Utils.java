@@ -1,13 +1,9 @@
 package com.space.apic;
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
-import android.support.design.widget.FloatingActionButton;
-import android.view.View;
 
-import com.github.jorgecastilloprz.FABProgressCircle;
+import com.twitter.sdk.android.core.TwitterSession;
 
 import java.util.ArrayList;
 
@@ -23,6 +19,7 @@ public class Utils {
     public static boolean canReadStorage = false;
     public static Location lastKnownLocation = null;
     public static boolean isRiding = false;
+    public static TwitterSession twitterSession = null;
 
     public static String getUsername() {
         return "LaunchHackathon";

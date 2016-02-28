@@ -1,6 +1,8 @@
 package com.space.apic;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +25,25 @@ import com.github.jorgecastilloprz.listeners.FABProgressListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterApiClient;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.models.Media;
+import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.core.services.MediaService;
+import com.twitter.sdk.android.core.services.StatusesService;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import io.fabric.sdk.android.Fabric;
+import retrofit.mime.TypedFile;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -35,6 +56,11 @@ public class MainActivity extends AppCompatActivity
         GoogleApiClient.OnConnectionFailedListener,
         FABProgressListener{
 
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "iOwwNXFbIIlTFsrCMvMySlqWj";
+    private static final String TWITTER_SECRET = "LIWtkr3ia7SDbxNXnujGROkbEP65TKR1UW7k1Y05N3iRS5hbLQ";
+
+
     Fragment activeFragment;
     String TAG = "MainActivity";
     GoogleApiClient mGoogleApiClient;
@@ -43,6 +69,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
         setContentView(com.space.apic.R.layout.activity_main);
 
         Utils.init();
@@ -156,14 +184,7 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
             activeFragment = fragment;
         } else if (id == R.id.nav_trip_experiences) {
-            getSupportActionBar().setTitle(R.string.trip_experiences);
-            TripExperiencesFragment fragment = new TripExperiencesFragment();
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            
-            fragmentTransaction.replace(R.id.container,fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-            activeFragment = fragment;
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(com.space.apic.R.id.drawer_layout);
@@ -185,6 +206,66 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
         activeFragment = fragment;
+
+        TwitterApiClient twitterApiClient = TwitterCore.getInstance().getApiClient();
+        MediaService mediaService = twitterApiClient.getMediaService();
+        final StatusesService statusesService = twitterApiClient.getStatusesService();
+
+        final String twitterPostCaption = cardData.caption + " #apiclaunch";
+
+        File imageFile = new File(getCacheDir(), "upload_twitter.jpeg");
+
+        try {
+            Bitmap rawBitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(Utils.mostRecentPhoto));
+            int width = rawBitmap.getWidth() / 2;
+            int height = rawBitmap.getHeight() / 2;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(rawBitmap, width, height, false);
+            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out); // '100' is quality
+            byte[] byteArray = out.toByteArray();
+            try {
+                imageFile.createNewFile();
+                FileOutputStream fos = new FileOutputStream(imageFile);
+                fos.write(byteArray);
+                fos.flush();
+                fos.close();
+            } catch (Exception e) {
+
+            }
+
+//            imageFile = new File(encoded);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String mimeType = getContentResolver().getType(Utils.mostRecentPhoto);
+        Log.v(TAG, "Image size is " + imageFile.length());
+
+        TypedFile media = new TypedFile("application/octet-stream", imageFile);
+        mediaService.upload(media, null, null, new Callback<Media>() {
+            @Override
+            public void success(Result<Media> result) {
+                Log.v(TAG, "Success! Media ID: " + result.data.mediaIdString);
+
+                statusesService.update(twitterPostCaption, null, null, null, null, null, null, null, result.data.mediaIdString, new Callback<Tweet>() {
+                    @Override
+                    public void success(Result<Tweet> result) {
+                        long id = result.data.id;
+                        Log.v(TAG, "Success! Tweet ID: " + result.data.id);
+                    }
+
+                    @Override
+                    public void failure(TwitterException e) {
+                        Log.v(TAG, e.toString());
+                    }
+                });
+            }
+
+            @Override
+            public void failure(TwitterException e) {
+                Log.v(TAG, e.toString());
+            }
+        });
     }
 
     @Override
@@ -213,7 +294,7 @@ public class MainActivity extends AppCompatActivity
                 android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, fragment);
                 fragmentTransaction.commitAllowingStateLoss();
-
+                activeFragment = fragment;
                 getSupportActionBar().setTitle(getString(R.string.make_new_post));
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image selection
@@ -221,9 +302,10 @@ public class MainActivity extends AppCompatActivity
                 // Image selection failed, advise user
             }
         } else if (resultCode == Constants.LAUNCH_UBER_REQUEST_CODE) {
-            System.out.println("CAME BACK FROM UBER");
+            System.out.println("CAME BACK FROM UBER.");
         }
 
+        System.out.println(activeFragment.toString());
         activeFragment.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
         Log.v(TAG, "onActivityResult");

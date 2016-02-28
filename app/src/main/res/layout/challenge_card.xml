@@ -108,6 +108,7 @@
                     style="?attr/borderlessButtonStyle"
                     android:text="Details"
                     android:id="@+id/challenge_details"/>
+
                 <Button
                     android:layout_weight="1"
                     android:layout_width="0dp"
