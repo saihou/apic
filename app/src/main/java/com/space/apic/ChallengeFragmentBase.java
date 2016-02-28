@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.github.jorgecastilloprz.FABProgressCircle;
-import com.github.jorgecastilloprz.listeners.FABProgressListener;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -248,6 +247,7 @@ public class ChallengeFragmentBase extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO: Go to Trip Experiences page
+
             }
         });
         //after a while, uber arrives after a few seconds

@@ -23,6 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="2a8f47beabd63ca0d3eaa1bd3b4a6a75b03494a6" />
         <activity
             android:name=".UberTripExperience"
             android:label="@string/title_activity_uber_trip_experience" >

@@ -73,7 +73,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_twitter_grey"
                 android:id="@+id/icon_twitter"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"/>
 
             <ToggleButton
                 android:layout_width="wrap_content"
@@ -85,7 +86,14 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 style="?attr/borderlessButtonStyle"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:visibility="gone"/>
+            <com.twitter.sdk.android.core.identity.TwitterLoginButton
+                android:id="@+id/twitter_login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
         </LinearLayout>
 
         <LinearLayout

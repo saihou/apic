@@ -15,12 +15,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import java.util.ArrayList;
+
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.FlipInRightYAnimator;
+import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
+import jp.wasabeef.recyclerview.animators.ScaleInLeftAnimator;
 
 public class UberTripExperience extends FragmentActivity {
 
@@ -70,10 +78,16 @@ public class UberTripExperience extends FragmentActivity {
         RecyclerView gallery = (RecyclerView) findViewById(R.id.gallery);
         createPlaceholderData();
         UberGalleryCardAdapter adapter = new UberGalleryCardAdapter(data);
-        gallery.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         gallery.setLayoutManager(layoutManager);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
+        final ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
+        scaleAdapter.setFirstOnly(false);
+        scaleAdapter.setInterpolator(new OvershootInterpolator());
+        gallery.setItemAnimator(new FlipInRightYAnimator());
+        gallery.getItemAnimator().setChangeDuration(3000);
+        gallery.setAdapter(scaleAdapter);
     }
 
     public void createPlaceholderData(){

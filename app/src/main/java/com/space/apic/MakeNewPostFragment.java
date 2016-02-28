@@ -1,6 +1,7 @@
 package com.space.apic;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -15,6 +16,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import java.io.FileNotFoundException;
 
@@ -38,6 +45,8 @@ public class MakeNewPostFragment extends Fragment {
     private String merchantDist;
 
     private MainActivity activity;
+
+    TwitterLoginButton loginButton;
 
     private OnFragmentInteractionListener mListener;
 
@@ -106,7 +115,7 @@ public class MakeNewPostFragment extends Fragment {
         merchantNameTextView.setText(String.format(Constants.MAKE_NEW_POST_LOCATION, merchantName));
 
         final ImageView twitterIcon = (ImageView) view.findViewById(R.id.icon_twitter);
-        ToggleButton twitterButton = (ToggleButton) view.findViewById(R.id.toggle_twitter);
+        final ToggleButton twitterButton = (ToggleButton) view.findViewById(R.id.toggle_twitter);
         twitterButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -130,12 +139,39 @@ public class MakeNewPostFragment extends Fragment {
                     //connect to facebook
                     buttonView.setTextColor(getResources().getColor(R.color.facebookBlue));
                     facebookIcon.setImageResource(R.drawable.ic_facebook_blue);
+                    if (Utils.twitterSession != null) {
+                        System.out.println(Utils.twitterSession.getUserName());
+                    } else {
+                        System.out.println("EMPTY");
+                    }
                 } else {
                     buttonView.setTextColor(getResources().getColor(R.color.black));
                     facebookIcon.setImageResource(R.drawable.ic_facebook_icon);
                 }
             }
         });
+
+        loginButton = (TwitterLoginButton) view.findViewById(R.id.twitter_login_button);
+        loginButton.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                // Do something with result, which provides a TwitterSession for making API calls
+                Utils.twitterSession = result.data;
+                System.out.println(result.data.getUserName().toString());
+                twitterIcon.setVisibility(View.VISIBLE);
+                twitterButton.setVisibility(View.VISIBLE);
+                twitterButton.setChecked(true);
+                loginButton.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                // Do something on failure
+                System.out.println("FAIL");
+                System.out.println(exception.toString());
+            }
+        });
+
 
         return view;
     }
@@ -178,5 +214,13 @@ public class MakeNewPostFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(HomeCardData newCard);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (loginButton!= null) {
+            loginButton.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

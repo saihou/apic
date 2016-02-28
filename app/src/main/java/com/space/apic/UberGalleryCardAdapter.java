@@ -65,6 +65,18 @@ public class UberGalleryCardAdapter extends RecyclerView.Adapter<UberGalleryCard
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        bind(viewHolder);
+    }
+
+    private void bind(final UberGalleryCardAdapter.ViewHolder viewHolder) {
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int position = viewHolder.getAdapterPosition();
+                UberGalleryCardAdapter.this.notifyItemChanged(position);
+            }
+        });
     }
 
     @Override
