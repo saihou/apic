@@ -15,4 +15,6 @@
     <color name="facebookBlue">#3b5998</color>
     <color name="uber">#003438</color>
     <color name="uberActivityBackground">#1A2121</color>
+    <color name="uberLightGrey">#96BFC2</color>
+
 </resources>
