@@ -6,8 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 
 
@@ -64,15 +62,11 @@ public class TripExperiencesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_trip_experiences, container, false);
         Button button = (Button) view.findViewById(R.id.button);
-        final WebView webView = (WebView) view.findViewById(R.id.web_view);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                webView.setWebViewClient(new WebViewClient());
-                webView.getSettings().setJavaScriptEnabled(true);
-                webView.getSettings().setDomStorageEnabled(true);
-                webView.loadUrl(Constants.UBER_START_AUTH_URL);
+                
             }
         });
         return view;

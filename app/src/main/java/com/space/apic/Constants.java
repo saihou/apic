@@ -26,5 +26,5 @@ public class Constants {
     public static final String MAKE_NEW_POST_LOCATION = "Location: %s";
 
     public static final String UBER_CLIENT_ID = "cNBliDXcKZwBI60URzyOj024-A6mUIsh";
-    public static final String UBER_START_AUTH_URL = "https://login.uber.com/oauth/v2/authorize?response_type=code&client_id=cNBliDXcKZwBI60URzyOj024-A6mUIsh";
+    public static final String UBER_SANDBOX_TRIP_EXPERIENCE_ENDPT = "https://sandbox-api.uber.com/v1/requests/current";
 }
