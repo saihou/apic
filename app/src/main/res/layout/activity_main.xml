@@ -8,10 +8,9 @@
 
         <!-- As the main content view, the view below consumes the entire
              space available using match_parent in both dimensions. -->
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
             <include
                 android:id="@+id/toolbar"
                 layout="@layout/toolbar">
@@ -19,11 +18,34 @@
 
             <FrameLayout
                 android:id="@+id/container"
+                android:layout_below="@id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </FrameLayout>
-
-        </LinearLayout>
+            <com.github.jorgecastilloprz.FABProgressCircle
+                app:reusable="true"
+                android:id="@+id/fabProgressCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_gravity="right|bottom"
+                >
+                <android.support.design.widget.FloatingActionButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/uber_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    app:backgroundTint="@color/uber"
+                    android:src="@mipmap/ic_uber"
+                    android:visibility="gone" />
+            </com.github.jorgecastilloprz.FABProgressCircle>
+        </RelativeLayout>
 
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
@@ -33,4 +55,5 @@
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/nav_header_main"
             app:menu="@menu/activity_main_drawer" />
-    </android.support.v4.widget.DrawerLayout>
+
+</android.support.v4.widget.DrawerLayout>

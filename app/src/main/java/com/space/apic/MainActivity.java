@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,7 +16,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.github.jorgecastilloprz.FABProgressCircle;
+import com.github.jorgecastilloprz.listeners.FABProgressListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -27,7 +32,8 @@ public class MainActivity extends AppCompatActivity
         NearbyChallengeFragment.OnFragmentInteractionListener,
         MakeNewPostFragment.OnFragmentInteractionListener,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener,
+        FABProgressListener{
 
     Fragment activeFragment;
     String TAG = "MainActivity";
@@ -71,6 +77,9 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.replace(com.space.apic.R.id.container, fragment);
         fragmentTransaction.commit();
         activeFragment = fragment;
+
+        FABProgressCircle fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
+        fabProgressCircle.attachListener(this);
     }
 
     @Override
@@ -251,5 +260,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d(TAG, "Failed to connect: Google Play Services!");
+    }
+
+    @Override
+    public void onFABProgressAnimationEnd(){
+        FABProgressCircle fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
+        Snackbar.make(fabProgressCircle, "Your Uber has arrived!", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show();
+        fabProgressCircle.hide();
+        FloatingActionButton uberButton = (FloatingActionButton) findViewById(R.id.uber_button);
+        uberButton.setVisibility(View.GONE);
     }
 }
