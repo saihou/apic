@@ -14,4 +14,5 @@
     <color name="twitterBlue">#55ACEE</color>
     <color name="facebookBlue">#3b5998</color>
     <color name="uber">#003438</color>
+    <color name="uberActivityBackground">#1A2121</color>
 </resources>

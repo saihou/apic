@@ -96,7 +96,7 @@ public class ChallengeFragmentBase extends Fragment {
                     height = height/scale;
                     width = width/scale;
                 }
-                Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+                Bitmap scaledBitmap = Utils.getCroppedBitmap(Bitmap.createScaledBitmap(bitmap, width, height, false));
                 cardPicture.setImageBitmap(scaledBitmap);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -104,15 +104,13 @@ public class ChallengeFragmentBase extends Fragment {
 
             final TextView cardMerchantName = (TextView) card.findViewById(R.id.merchant_name);
             final TextView challengeDuration = (TextView) card.findViewById(R.id.challenge_duration);
-            final TextView challengeRestaurant = (TextView) card.findViewById(R.id.challenge_restaurant);
             final TextView distance = (TextView) card.findViewById(R.id.challenge_distance);
             final TextView caption = (TextView) card.findViewById(R.id.caption);
 
             cardMerchantName.setText(placeHolderChallengeFavourites.get(i).merchaintName);
             challengeDuration.setText(placeHolderChallengeFavourites.get(i).challengeDuration);
-            challengeRestaurant.setText(placeHolderChallengeFavourites.get(i).challengeDuration);
-            distance.setText(placeHolderChallengeFavourites.get(i).getChallengeDistance());
-            caption.setText(placeHolderChallengeFavourites.get(i).getCaption());
+            distance.setText(placeHolderChallengeFavourites.get(i).challengeDistance);
+            caption.setText(placeHolderChallengeFavourites.get(i).caption);
 
             Button favouriteButton = (Button) card.findViewById(R.id.challenge_later);
             Button joinButton = (Button) card.findViewById(R.id.challenge_join);
