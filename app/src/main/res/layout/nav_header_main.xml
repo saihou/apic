@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="nekonekonik"
+        android:text="LaunchHackathon"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:id="@+id/drawer_name"
         android:layout_below="@+id/drawer_picture"

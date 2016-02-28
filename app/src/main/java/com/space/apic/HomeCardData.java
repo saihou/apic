@@ -31,7 +31,6 @@ public class HomeCardData {
     public void setPicture(String picture) {
         this.picture = picture;
     }
-
     public String getPicture() {
         return picture;
     }

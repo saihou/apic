@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(com.space.apic.R.layout.activity_main);
 
+        Utils.init();
+
         Toolbar toolbar = (Toolbar) findViewById(com.space.apic.R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(com.space.apic.R.string.app_name);
@@ -160,6 +162,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(HomeCardData cardData) {
         HomeFragment fragment = new HomeFragment();
+        getSupportActionBar().setTitle(getString(R.string.home));
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
