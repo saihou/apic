@@ -205,40 +205,44 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
             i.setData(Uri.parse(url));
             activity.startActivity(i);
         }
-        FloatingActionButton uberFAB = (FloatingActionButton) activity.findViewById(R.id.uber_button);
-        uberFAB.setVisibility(View.VISIBLE);
-        final FABProgressCircle fabProgressCircle = (FABProgressCircle) activity.findViewById(R.id.fabProgressCircle);
-
-        //GO TO UBER TRIP EXPERIENCES WOOHOO
-        uberFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(activity,UberTripExperience.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("merchantName", mDataset.get(position).merchaintName);
-                intent.putExtras(bundle);
-                activity.startActivity(intent);
-            }
-        });
-
-        fabProgressCircle.show();
-        Utils.isRiding = true;
-        fabProgressCircle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: Go to Trip Experiences page
-            }
-        });
-        //after a while, uber arrives after a few seconds
-        new Thread(new Runnable() {
-            public void run() {
+        final FloatingActionButton uberFAB = (FloatingActionButton) activity.findViewById(R.id.uber_button);
+        new Thread(new Runnable(){
+            public void run(){
                 try {
-                    Thread.sleep(60000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                fabProgressCircle.beginFinalAnimation();
-                Utils.isRiding = false;
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        uberFAB.setVisibility(View.VISIBLE);
+                        uberFAB.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(activity,UberTripExperience.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("merchantName",mDataset.get(position).merchaintName);
+                                intent.putExtras(bundle);
+                                activity.startActivity(intent);
+                            }
+                        });
+                        final FABProgressCircle fabProgressCircle = (FABProgressCircle) activity.findViewById(R.id.fabProgressCircle);
+                        fabProgressCircle.show();
+                        Utils.isRiding = true;
+                        new Thread(new Runnable(){
+                            public void run() {
+                                try {
+                                    Thread.sleep(60000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                fabProgressCircle.beginFinalAnimation();
+                                Utils.isRiding = false;
+                            }
+                        });
+                    }
+                });
             }
         }).start();
     }
