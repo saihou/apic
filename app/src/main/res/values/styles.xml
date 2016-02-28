@@ -11,6 +11,13 @@
         <item name="colorAccent">@color/ColorAccent</item>
     </style>
 
+    <style name="UberAppTheme" parent="UberAppTheme.Base"></style>
+    <style name="UberAppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/uberThemePrimary</item>
+        <item name="colorPrimaryDark">@color/uberThemePrimaryDark</item>
+        <item name="colorAccent">@color/uberThemeColorAccent</item>
+    </style>
+
     <!--Style for bottom_sheet-->
     <style name="BottomSheet.StyleDialog" parent="BottomSheet.Dialog">
         <item name="android:backgroundDimAmount">0.6</item>

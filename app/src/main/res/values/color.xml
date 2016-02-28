@@ -18,4 +18,8 @@
     <color name="uberLightGrey">#96BFC2</color>
     <color name="yellow">#FFC73A</color>
 
+    <color name="uberThemeColorAccent">#003438</color>
+    <color name="uberThemePrimaryDark">#1A2121</color>
+    <color name="uberThemePrimary">#96BFC2</color>
+
 </resources>
