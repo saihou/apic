@@ -142,15 +142,24 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
             activeFragment = fragment;
         } else if (id == com.space.apic.R.id.nav_following) {
-            getSupportActionBar().setTitle(com.space.apic.R.string.following);
+            getSupportActionBar().setTitle(R.string.following);
 //            SettingsFragment fragment = new SettingsFragment();
 //            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //            fragmentTransaction.replace(R.id.container,fragment);
 //            fragmentTransaction.commit();
         } else if (id == com.space.apic.R.id.nav_store) {
-            getSupportActionBar().setTitle(com.space.apic.R.string.store);
+            getSupportActionBar().setTitle(R.string.store);
             StoreFragment fragment = new StoreFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container,fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+            activeFragment = fragment;
+        } else if (id == R.id.nav_trip_experiences) {
+            getSupportActionBar().setTitle(R.string.trip_experiences);
+            TripExperiencesFragment fragment = new TripExperiencesFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            
             fragmentTransaction.replace(R.id.container,fragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
@@ -211,6 +220,8 @@ public class MainActivity extends AppCompatActivity
             } else {
                 // Image selection failed, advise user
             }
+        } else if (resultCode == Constants.LAUNCH_UBER_REQUEST_CODE) {
+            System.out.println("CAME BACK FROM UBER");
         }
 
         activeFragment.onActivityResult(requestCode, resultCode, data);

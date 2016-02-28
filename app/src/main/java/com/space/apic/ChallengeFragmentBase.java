@@ -1,6 +1,5 @@
 package com.space.apic;
 
-import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -180,6 +179,43 @@ public class ChallengeFragmentBase extends Fragment {
             uberButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
+                    try {
+                        PackageManager pm = getContext().getPackageManager();
+                        pm.getPackageInfo("com.ubercab", PackageManager.GET_ACTIVITIES);
+                        String uri = "uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup=my_location&dropoff[latitude]=37.802374&dropoff[longitude]=-122.405818&dropoff[nickname]=Coit%20Tower&dropoff[formatted_address]=1%20Telegraph%20Hill%20Blvd%2C%20San%20Francisco%2C%20CA%2094133&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d";
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(uri));
+                        startActivity(intent);
+                    } catch (PackageManager.NameNotFoundException e) {
+                        // No Uber app! Open mobile website.
+                        String url = "https://m.uber.com/sign-up?client_id="+Constants.UBER_CLIENT_ID;
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(url));
+                        startActivityForResult(i, Constants.LAUNCH_UBER_REQUEST_CODE);
+                    }
+                    FloatingActionButton uberFAB = (FloatingActionButton)getActivity().findViewById(R.id.uber_button);
+                    uberFAB.setVisibility(View.VISIBLE);
+                    final FABProgressCircle fabProgressCircle = (FABProgressCircle)getActivity().findViewById(R.id.fabProgressCircle);
+                    fabProgressCircle.show();
+                    Utils.isRiding = true;
+                    fabProgressCircle.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //TODO: Go to Trip Experiences page
+                        }
+                    });
+                    //after a while, uber arrives after a few seconds
+                    new Thread(new Runnable() {
+                        public void run() {
+                            try {
+                                Thread.sleep(60000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            fabProgressCircle.beginFinalAnimation();
+                            Utils.isRiding = false;
+                        }
+                    }).start();
                     floatingUberButtonBehavior();
                 }
             });
