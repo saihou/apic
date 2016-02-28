@@ -104,9 +104,7 @@ public class ChallengeFragmentBase extends Fragment {
                     try {
                         PackageManager pm = getContext().getPackageManager();
                         pm.getPackageInfo("com.ubercab", PackageManager.GET_ACTIVITIES);
-                        String uri = "uber://?action=setPickup&pickup=my_location&client_id="+Constants.UBER_CLIENT_ID
-                                    +"&dropoff[latitude]="+Constants.UBER_DROP_LAT+"&dropoff[longtitude]="+ Constants.UBER_DROP_LNG
-                                    +"&dropoff[nickname]="+Constants.UBER_DROP_NAME+"&dropoff[formatted_address]="+Constants.UBER_DROP_ADDRESS;
+                        String uri = "uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup=my_location&dropoff[latitude]=37.802374&dropoff[longitude]=-122.405818&dropoff[nickname]=Coit%20Tower&dropoff[formatted_address]=1%20Telegraph%20Hill%20Blvd%2C%20San%20Francisco%2C%20CA%2094133&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d";
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri.parse(uri));
                         startActivity(intent);
