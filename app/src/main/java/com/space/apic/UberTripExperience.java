@@ -15,12 +15,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.FlipInRightYAnimator;
+import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
+import jp.wasabeef.recyclerview.animators.ScaleInLeftAnimator;
 
 public class UberTripExperience extends FragmentActivity {
 
@@ -34,6 +44,11 @@ public class UberTripExperience extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uber_trip_experience);
+
+        Bundle bundle = getIntent().getExtras();
+        String merchantName = bundle.getString("merchantName");
+        TextView merchantLabel = (TextView) findViewById(R.id.merchant_name);
+        merchantLabel.setText(merchantName);
 
         VideoView video_player_view = (VideoView) findViewById(R.id.video_player);
         String fileName = "android.resource://"+  getPackageName() + "/raw/ubervideo";
@@ -70,37 +85,39 @@ public class UberTripExperience extends FragmentActivity {
         RecyclerView gallery = (RecyclerView) findViewById(R.id.gallery);
         createPlaceholderData();
         UberGalleryCardAdapter adapter = new UberGalleryCardAdapter(data);
-        gallery.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         gallery.setLayoutManager(layoutManager);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
+        final ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
+        scaleAdapter.setFirstOnly(false);
+        scaleAdapter.setInterpolator(new OvershootInterpolator());
+        gallery.setItemAnimator(new FlipInRightYAnimator());
+        gallery.getItemAnimator().setChangeDuration(3000);
+        gallery.setAdapter(scaleAdapter);
     }
 
     public void createPlaceholderData(){
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
-        data.add(new ChallengeCardData("","","","","CAPTION",String.valueOf(R.drawable.challenge_ski)));
+        data.add(new ChallengeCardData("Chocolate Origin", "30 mins left", "Chocolate Origin", "0.4 mi", "Chocolate Origin",String.valueOf(R.drawable.challenge_chocolate_origin)));
+        data.add(new ChallengeCardData("The Black Horse", "15 mins left", "The Black Horse", "0.9 mi", "The Black Horse", String.valueOf(R.drawable.challenge_bar)));
+        data.add(new ChallengeCardData("Love With Burgers", "27 mins left", "Love With Burgers", "5.4 mi", "Love With Burgers",String.valueOf(R.drawable.challenge_burger)));
+        data.add(new ChallengeCardData("Diablo's Wings", "12 days left", "Diablo's Wings", "0.4 mi", "Diablo's Wings",String.valueOf(R.drawable.challenge_wings)));
+        data.add(new ChallengeCardData("Sichuan Hotpot", "30 days left", "Sichuan Hotpot", "5.4 mi", "Sichuan Hotpot",String.valueOf(R.drawable.challenge_hotpot)));
+        data.add(new ChallengeCardData("Chocolate Origin", "30 mins left", "Chocolate Origin", "0.4 mi", "Chocolate Origin",String.valueOf(R.drawable.challenge_chocolate_origin)));
+        data.add(new ChallengeCardData("The Black Horse", "15 mins left", "The Black Horse", "0.9 mi", "The Black Horse", String.valueOf(R.drawable.challenge_bar)));
+        data.add(new ChallengeCardData("Love With Burgers", "27 mins left", "Love With Burgers", "5.4 mi", "Love With Burgers",String.valueOf(R.drawable.challenge_burger)));
+        data.add(new ChallengeCardData("Diablo's Wings", "12 days left", "Diablo's Wings", "0.4 mi", "Diablo's Wings",String.valueOf(R.drawable.challenge_wings)));
+        data.add(new ChallengeCardData("Sichuan Hotpot", "30 days left", "Sichuan Hotpot", "5.4 mi", "Sichuan Hotpot",String.valueOf(R.drawable.challenge_hotpot)));
+        data.add(new ChallengeCardData("Chocolate Origin", "30 mins left", "Chocolate Origin", "0.4 mi", "Chocolate Origin",String.valueOf(R.drawable.challenge_chocolate_origin)));
+        data.add(new ChallengeCardData("The Black Horse", "15 mins left", "The Black Horse", "0.9 mi", "The Black Horse", String.valueOf(R.drawable.challenge_bar)));
+        data.add(new ChallengeCardData("Love With Burgers", "27 mins left", "Love With Burgers", "5.4 mi", "Love With Burgers",String.valueOf(R.drawable.challenge_burger)));
+        data.add(new ChallengeCardData("Diablo's Wings", "12 days left", "Diablo's Wings", "0.4 mi", "Diablo's Wings",String.valueOf(R.drawable.challenge_wings)));
+        data.add(new ChallengeCardData("Sichuan Hotpot", "30 days left", "Sichuan Hotpot", "5.4 mi", "Sichuan Hotpot",String.valueOf(R.drawable.challenge_hotpot)));
+        data.add(new ChallengeCardData("Chocolate Origin", "30 mins left", "Chocolate Origin", "0.4 mi", "Chocolate Origin",String.valueOf(R.drawable.challenge_chocolate_origin)));
+        data.add(new ChallengeCardData("The Black Horse", "15 mins left", "The Black Horse", "0.9 mi", "The Black Horse", String.valueOf(R.drawable.challenge_bar)));
+        data.add(new ChallengeCardData("Love With Burgers", "27 mins left", "Love With Burgers", "5.4 mi", "Love With Burgers",String.valueOf(R.drawable.challenge_burger)));
+        data.add(new ChallengeCardData("Diablo's Wings", "12 days left", "Diablo's Wings", "0.4 mi", "Diablo's Wings",String.valueOf(R.drawable.challenge_wings)));
+        data.add(new ChallengeCardData("Sichuan Hotpot", "30 days left", "Sichuan Hotpot", "5.4 mi", "Sichuan Hotpot",String.valueOf(R.drawable.challenge_hotpot)));
 
     };
 

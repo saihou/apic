@@ -117,7 +117,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         holder.uberRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                floatingUberButtonBehavior();
+                floatingUberButtonBehavior(position);
             }
         });
 
@@ -190,7 +190,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         return mDataset.size();
     }
 
-    private void floatingUberButtonBehavior() {
+    private void floatingUberButtonBehavior(final int position) {
         try {
             PackageManager pm = activity.getApplicationContext().getPackageManager();
             pm.getPackageInfo("com.ubercab", PackageManager.GET_ACTIVITIES);
@@ -214,7 +214,9 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity,UberTripExperience.class);
-
+                Bundle bundle = new Bundle();
+                bundle.putString("merchantName", mDataset.get(position).merchaintName);
+                intent.putExtras(bundle);
                 activity.startActivity(intent);
             }
         });
