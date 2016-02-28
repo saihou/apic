@@ -208,6 +208,17 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         FloatingActionButton uberFAB = (FloatingActionButton) activity.findViewById(R.id.uber_button);
         uberFAB.setVisibility(View.VISIBLE);
         final FABProgressCircle fabProgressCircle = (FABProgressCircle) activity.findViewById(R.id.fabProgressCircle);
+
+        //GO TO UBER TRIP EXPERIENCES WOOHOO
+        uberFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity,UberTripExperience.class);
+
+                activity.startActivity(intent);
+            }
+        });
+
         fabProgressCircle.show();
         Utils.isRiding = true;
         fabProgressCircle.setOnClickListener(new View.OnClickListener() {
