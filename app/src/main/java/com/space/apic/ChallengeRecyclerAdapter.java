@@ -58,7 +58,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
             merchantName = (TextView) itemView.findViewById(R.id.merchant_name);
             challengeDuration = (TextView) itemView.findViewById(R.id.challenge_duration);
             picture = (ImageView) itemView.findViewById(R.id.picture);
-            challengeRestaurant = (TextView) itemView.findViewById(R.id.challenge_restaurant);
+//            challengeRestaurant = (TextView) itemView.findViewById(R.id.challenge_restaurant);
             challengeDistance = (TextView) itemView.findViewById(R.id.challenge_distance);
             caption = (TextView) itemView.findViewById(R.id.caption);
             joinChallenge = (Button) itemView.findViewById(R.id.challenge_join);
@@ -94,7 +94,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         ChallengeCardData data = mDataset.get(position);
         holder.merchantName.setText(data.getUsername());
         holder.challengeDuration.setText(data.getTime());
-        holder.challengeRestaurant.setText(data.getChallengeRestaurant());
+//        holder.challengeRestaurant.setText(data.getChallengeRestaurant());
         holder.challengeDistance.setText(data.getChallengeDistance());
         holder.caption.setText(data.getCaption());
 
@@ -108,7 +108,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
                 height = height/scale;
                 width = width/scale;
             }
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+            Bitmap scaledBitmap = Utils.getCroppedBitmap(Bitmap.createScaledBitmap(bitmap, width, height, false));
             holder.picture.setImageBitmap(scaledBitmap);
         } catch (Exception e) {
             e.printStackTrace();
