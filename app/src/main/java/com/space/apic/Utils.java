@@ -1,7 +1,13 @@
 package com.space.apic;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
+import android.view.View;
+
+import com.github.jorgecastilloprz.FABProgressCircle;
 
 import java.util.ArrayList;
 

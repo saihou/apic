@@ -60,16 +60,15 @@ public class TripExperiencesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_trip_experiences, container, false);
+        final View view = inflater.inflate(R.layout.fragment_trip_experiences, container, false);
         Button button = (Button) view.findViewById(R.id.button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
         return view;
     }
-
 }

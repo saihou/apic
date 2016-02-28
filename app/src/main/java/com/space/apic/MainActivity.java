@@ -159,6 +159,7 @@ public class MainActivity extends AppCompatActivity
             getSupportActionBar().setTitle(R.string.trip_experiences);
             TripExperiencesFragment fragment = new TripExperiencesFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            
             fragmentTransaction.replace(R.id.container,fragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
