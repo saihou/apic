@@ -24,4 +24,5 @@ public class Constants {
     public static final String BUY_COUPON_TEXT = "%s PTS";
     public static final String MAKE_NEW_POST_LOCATION = "Location: %s";
 
+    public static final String UBER_CLIENT_ID = "cNBliDXcKZwBI60URzyOj024-A6mUIsh";
 }

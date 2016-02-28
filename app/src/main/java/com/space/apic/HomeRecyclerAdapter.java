@@ -92,7 +92,15 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
         try {
             Bitmap bitmap = BitmapFactory.decodeStream(activity.getContentResolver().openInputStream(uri));
-            holder.picture.setImageBitmap(bitmap);
+            int height = bitmap.getHeight();
+            int width = bitmap.getWidth();
+            int scale = 2;
+            if (width > 800) {
+                height = height/scale;
+                width = width/scale;
+            }
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+            holder.picture.setImageBitmap(scaledBitmap);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
