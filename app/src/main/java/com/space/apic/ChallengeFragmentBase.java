@@ -1,7 +1,10 @@
 package com.space.apic;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -98,7 +101,22 @@ public class ChallengeFragmentBase extends Fragment {
             uberButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-
+                    try {
+                        PackageManager pm = getContext().getPackageManager();
+                        pm.getPackageInfo("com.ubercab", PackageManager.GET_ACTIVITIES);
+                        String uri = "uber://?action=setPickup&pickup=my_location&client_id="+Constants.UBER_CLIENT_ID
+                                    +"&dropoff[latitude]="+Constants.UBER_DROP_LAT+"&dropoff[longtitude]="+ Constants.UBER_DROP_LNG
+                                    +"&dropoff[nickname]="+Constants.UBER_DROP_NAME+"&dropoff[formatted_address]="+Constants.UBER_DROP_ADDRESS;
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(uri));
+                        startActivity(intent);
+                    } catch (PackageManager.NameNotFoundException e) {
+                        // No Uber app! Open mobile website.
+                        String url = "https://m.uber.com/sign-up?client_id="+Constants.UBER_CLIENT_ID;
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(url));
+                        startActivity(i);
+                    }
                 }
             });
             inclusionViewGroup.addView(card);

@@ -25,4 +25,8 @@ public class Constants {
     public static final String MAKE_NEW_POST_LOCATION = "Location: %s";
 
     public static final String UBER_CLIENT_ID = "cNBliDXcKZwBI60URzyOj024-A6mUIsh";
+    public static final String UBER_DROP_LAT = "37.802374";
+    public static final String UBER_DROP_LNG = "122.405818";
+    public static final String UBER_DROP_NAME = "The%20Fish%20Market";
+    public static final String UBER_DROP_ADDRESS = "E.El%20Camino%20Real";
 }
