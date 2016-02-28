@@ -138,8 +138,8 @@ public class ChallengeFragment extends Fragment {
         {
             switch (position){
                 case 0 : return new NearbyChallengeFragment();
-                case 1 : return new FavoritesChallengeFragment();
-                case 2 : return new HistoryChallengeFragment();
+                case 1 : return new ChallengeFragmentBase().newInstance("favourites_challenge");
+                case 2 : return new ChallengeFragmentBase().newInstance("history_challenge");
             }
             return null;
         }

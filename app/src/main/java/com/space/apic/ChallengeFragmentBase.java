@@ -17,43 +17,38 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link HistoryChallengeFragment.OnFragmentInteractionListener} interface
+ * {@link ChallengeFragmentBase.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HistoryChallengeFragment#newInstance} factory method to
+ * Use the {@link ChallengeFragmentBase#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HistoryChallengeFragment extends Fragment {
+public class ChallengeFragmentBase extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String PAGETYPE = "";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String pageType;
 
-    private ArrayList<ChallengeCardData> placeHolderChallengeFavourites = new ArrayList<ChallengeCardData>();
+    public ArrayList<ChallengeCardData> placeHolderChallengeFavourites = new ArrayList<ChallengeCardData>();
 
     private OnFragmentInteractionListener mListener;
 
-    public HistoryChallengeFragment() {
-        // Required empty public constructor
+    public ChallengeFragmentBase() {
     }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param pageType Parameter 1.
      * @return A new instance of fragment FavoritesChallengeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FavoritesChallengeFragment newInstance(String param1, String param2) {
-        FavoritesChallengeFragment fragment = new FavoritesChallengeFragment();
+    public static ChallengeFragmentBase newInstance(String pageType) {
+        ChallengeFragmentBase fragment = new ChallengeFragmentBase();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(PAGETYPE, pageType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,21 +57,25 @@ public class HistoryChallengeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            pageType = getArguments().getString(PAGETYPE);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenge_list, container, false);
-        createPlaceHolderChallengeFavourites();
         ViewGroup inclusionViewGroup = (ViewGroup)view.findViewById(R.id.inclusionlayout);
+        createPlaceHolderChallengeFavourites();
         for(int i = 0; i < placeHolderChallengeFavourites.size(); i++) {
             final int position = i;
             View card = LayoutInflater.from(getContext()).inflate(R.layout.challenge_card, null);
+            Button favouriteButton = (Button) card.findViewById(R.id.challenge_later);
             Button joinButton = (Button) card.findViewById(R.id.challenge_join);
-            joinButton.setVisibility(View.GONE);
+            if(pageType == "favourites_challenge") {
+                favouriteButton.setVisibility(View.GONE);
+            } else if (pageType == "history_challenge") {
+                joinButton.setVisibility(View.GONE);
+            }
             TextView merchantName = (TextView) card.findViewById(R.id.merchant_name);
             TextView challengeDuration = (TextView) card.findViewById(R.id.challenge_duration);
             merchantName.setText(placeHolderChallengeFavourites.get(i).merchaintName);
@@ -100,9 +99,14 @@ public class HistoryChallengeFragment extends Fragment {
     }
 
     public void createPlaceHolderChallengeFavourites() {
-        placeHolderChallengeFavourites.add(new ChallengeCardData("FLUFFY", "6 days left", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
-        placeHolderChallengeFavourites.add(new ChallengeCardData("Naruto", "10 days left", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
-        placeHolderChallengeFavourites.add(new ChallengeCardData("Pokemon", "99 days left", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
+        if (pageType == "favourites_challenge") {
+            placeHolderChallengeFavourites.add(new ChallengeCardData("FLUFFY", "6 days left", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.", "content://media/external/images/media/12671"));
+            placeHolderChallengeFavourites.add(new ChallengeCardData("Naruto", "10 days left", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.", "content://media/external/images/media/12671"));
+        } else if (pageType == "history_challenge"){
+            placeHolderChallengeFavourites.add(new ChallengeCardData("YAYY IT WORKS", "7777 days left", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
+            placeHolderChallengeFavourites.add(new ChallengeCardData("OnePiece", "10 days left", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
+            placeHolderChallengeFavourites.add(new ChallengeCardData("Pokemon", "10 days left", "Little Sheep Hotpot", "0.4 mi", "HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO.","content://media/external/images/media/12671"));
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

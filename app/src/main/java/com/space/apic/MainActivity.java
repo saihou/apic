@@ -22,11 +22,9 @@ import com.google.android.gms.location.LocationServices;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HomeFragment.OnFragmentInteractionListener,
-        FavoritesFragment.OnFragmentInteractionListener,
         ChallengeFragment.OnFragmentInteractionListener,
+        ChallengeFragmentBase.OnFragmentInteractionListener,
         NearbyChallengeFragment.OnFragmentInteractionListener,
-        FavoritesChallengeFragment.OnFragmentInteractionListener,
-        HistoryChallengeFragment.OnFragmentInteractionListener,
         MakeNewPostFragment.OnFragmentInteractionListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -143,14 +141,6 @@ public class MainActivity extends AppCompatActivity
             StoreFragment fragment = new StoreFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.container,fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-            activeFragment = fragment;
-        } else if (id == com.space.apic.R.id.nav_favorites) {
-            getSupportActionBar().setTitle(com.space.apic.R.string.favorites);
-            FavoritesFragment fragment = new FavoritesFragment();
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(com.space.apic.R.id.container,fragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             activeFragment = fragment;
