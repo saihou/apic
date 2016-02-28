@@ -7,6 +7,7 @@ public class Constants {
     public static final int TAKE_PIC_REQUEST_CODE = 0;
     public static final int SELECT_PIC_REQUEST_CODE = 1;
     public static final int MAKE_NEW_POST_REQUEST_CODE = 2;
+    public static final int LAUNCH_UBER_REQUEST_CODE = 3;
 
     public static final int READ_STORAGE_REQUEST_PERMISSION = 100;
     public static final int WRITE_STORAGE_REQUEST_PERMISSION = 101;
@@ -25,8 +26,5 @@ public class Constants {
     public static final String MAKE_NEW_POST_LOCATION = "Location: %s";
 
     public static final String UBER_CLIENT_ID = "cNBliDXcKZwBI60URzyOj024-A6mUIsh";
-    public static final String UBER_DROP_LAT = "37.802374";
-    public static final String UBER_DROP_LNG = "122.405818";
-    public static final String UBER_DROP_NAME = "The%20Fish%20Market";
-    public static final String UBER_DROP_ADDRESS = "E.El%20Camino%20Real";
+    public static final String UBER_START_AUTH_URL = "https://login.uber.com/oauth/v2/authorize?response_type=code&client_id=cNBliDXcKZwBI60URzyOj024-A6mUIsh";
 }

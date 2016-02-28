@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme" parent = "AppTheme.Base">
+    <style name="AppTheme" parent="AppTheme.Base">
 
     </style>
     <!-- Base application theme. -->
@@ -22,4 +22,8 @@
         <item name="bs_dividerColor">@color/lightGrey</item>
         <item name="bs_numColumns">2</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

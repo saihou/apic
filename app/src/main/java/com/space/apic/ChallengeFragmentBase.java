@@ -1,6 +1,5 @@
 package com.space.apic;
 
-import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -113,7 +112,7 @@ public class ChallengeFragmentBase extends Fragment {
                         String url = "https://m.uber.com/sign-up?client_id="+Constants.UBER_CLIENT_ID;
                         Intent i = new Intent(Intent.ACTION_VIEW);
                         i.setData(Uri.parse(url));
-                        startActivity(i);
+                        startActivityForResult(i, Constants.LAUNCH_UBER_REQUEST_CODE);
                     }
                 }
             });
