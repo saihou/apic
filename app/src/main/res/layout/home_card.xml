@@ -20,7 +20,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HELLO HELLO IT'S ME"
+                android:text="Scott"
                 android:id="@+id/username"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
@@ -28,7 +28,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HELLO HELLO IT'S ME"
+                android:text="3 mins ago"
                 android:id="@+id/time"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
@@ -41,7 +41,8 @@
                 android:layout_below="@+id/username"
                 android:adjustViewBounds="true"
                 android:layout_centerHorizontal="true"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/coupon_ski"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,63 +59,85 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/picture"
                 android:id="@+id/challenge_info"
-                android:background="@color/ColorAccent"
-                android:padding="3dp">
+                >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Little Sheep Hotpot"
                     android:id="@+id/challenge_restaurant"
                     android:padding="5dp"
-                    android:textStyle="bold"/>
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
 
+            </RelativeLayout>
+
+            <View android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/ColorPrimary"
+                android:layout_below="@id/challenge_info">
+            </View>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/challenge_info"
+                android:id="@+id/caption_and_misc">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO."
+                    android:id="@+id/caption"
+                    android:padding="6dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_toLeftOf="@+id/loc_icon"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:id="@+id/loc_icon"
+                    android:layout_alignTop="@+id/caption"
                     android:src="@drawable/ic_location_on_black_24dp"
                     android:layout_toLeftOf="@+id/challenge_distance"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.4mi"
-                    android:padding="5dp"
+                    android:paddingRight="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:id="@+id/challenge_distance"
-                    android:layout_alignParentEnd="true"
+                    android:layout_alignBottom="@+id/loc_icon"
                     android:layout_alignParentRight="true"
-                    android:layout_alignBottom="@id/challenge_restaurant"/>
+                    android:layout_alignParentEnd="true" />
+
             </RelativeLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="HELLO IT'S ME. I'M EATING GOOD FOOD. COME JOIN ME NAO."
-                android:id="@+id/caption"
-                android:padding="5dp"
-                android:layout_below="@id/challenge_info"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/caption"
+                android:layout_below="@id/caption_and_misc"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 style="?attr/borderlessButtonStyle"
                 android:text="View Challenge"
                 android:id="@+id/view_challenge_btn"/>
-            <ImageView
-                android:src="@drawable/ic_star_border_black_24dp"
-                android:tag="@drawable/ic_star_border_black_24dp"
+
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/caption"
-                android:layout_alignBottom="@id/view_challenge_btn"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:id="@+id/star"
-                android:padding="8dp"
-                android:tint="@color/ColorPrimary"
-                />
+                android:layout_below="@id/caption_and_misc"
+                android:layout_toLeftOf="@id/view_challenge_btn"
+                style="?attr/borderlessButtonStyle"
+                android:text="Later"
+                android:id="@+id/fav_btn"/>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

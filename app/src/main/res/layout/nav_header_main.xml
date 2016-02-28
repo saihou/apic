@@ -11,12 +11,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/drawer_picture"
+    
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@android:drawable/sym_def_app_icon"
+        android:text="APic"
+        android:textSize="40sp"
+        android:gravity="center"
+        android:textColor="@color/white"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -24,13 +26,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="LaunchHackathon"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:id="@+id/drawer_name"
-        android:layout_below="@+id/drawer_picture"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textSize="18sp"
+        android:textColor="@color/black"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -40,7 +43,8 @@
         android:id="@+id/wallet_balance"
         android:layout_alignBottom="@+id/drawer_name"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/black"/>
 
     <ImageView
         android:layout_width="wrap_content"

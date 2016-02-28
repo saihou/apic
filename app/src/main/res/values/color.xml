@@ -16,5 +16,6 @@
     <color name="uber">#003438</color>
     <color name="uberActivityBackground">#1A2121</color>
     <color name="uberLightGrey">#96BFC2</color>
+    <color name="yellow">#FFC73A</color>
 
 </resources>
