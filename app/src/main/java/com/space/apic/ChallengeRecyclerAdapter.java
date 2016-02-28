@@ -95,8 +95,6 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         holder.challengeDistance.setText(data.getChallengeDistance());
         holder.caption.setText(data.getCaption());
 
-        Uri uri = Uri.parse(data.getPicture());
-
         try {
             int picture = Integer.parseInt(data.getPicture());
             Bitmap bitmap = BitmapFactory.decodeResource(activity.getResources(), picture);
@@ -158,7 +156,6 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
             public void onClick(View v) {
                 ChallengeCardData challengeData = mDataset.get(position);
                 Bundle bundle = new Bundle();
-                //TODO: set budle arguments for card
                 FragmentManager fm = activity.getFragmentManager();
                 ChallengeDetailsDialogFragment challengeDetailsDialog = new ChallengeDetailsDialogFragment();
                 challengeDetailsDialog.setArguments(bundle);

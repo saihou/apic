@@ -145,14 +145,12 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             }
         });
 
-        final HomeCardData clickedData = data;
-
         holder.viewChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.mostRecentPost = clickedData;
                 activity.getSupportActionBar().setTitle(R.string.challenge);
-                com.space.apic.ChallengeFragment fragment = new com.space.apic.ChallengeFragment();
+                Utils.mostRecentChallengeClicked = holder.challengeRestaurant.getText().toString();
+                com.space.apic.ChallengeFragment fragment = new ChallengeFragment();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container,fragment);
                 fragmentTransaction.addToBackStack(null);

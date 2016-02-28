@@ -80,6 +80,11 @@ public class NearbyChallengeFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        if (Utils.mostRecentChallengeClicked != null) {
+            mLayoutManager.scrollToPosition(Utils.lookupChallenge());
+            Utils.mostRecentChallengeClicked = null;
+        }
+
         mCardData = new ArrayList<>();
         mAdapter = new ChallengeRecyclerAdapter(mCardData, (MainActivity) getActivity());
         mRecyclerView.setAdapter(mAdapter);
