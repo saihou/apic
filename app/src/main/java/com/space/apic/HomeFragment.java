@@ -122,9 +122,10 @@ public class HomeFragment extends Fragment {
 
     private void createPlaceholderData() {
         mCardData.add(new HomeCardData("Ken Lee", "6 mins ago", "Sichuan Hotpot", "0.3 mi", "Can't live without hotpot!!",String.valueOf(R.drawable.post_hotpot)));
+        mCardData.add(new HomeCardData("Dewi", "45 mins ago", "Sichuan Hotpot", "0.3 mi", "Just me enjoying myself at my favorite restaurant. :)",String.valueOf(R.drawable.post_hotpot_2)));
         mCardData.add(new HomeCardData("stephanie_hall", "27 mins ago", "Real Escape Room", "0.8 mi", "Help us please!!!",String.valueOf(R.drawable.post_escaperoom)));
         mCardData.add(new HomeCardData("Kimberly Chen", "Just now", "Gokart Racer", "1.4 mi", "Bringing out the Michael Schumacher in me LOL ", String.valueOf(R.drawable.post_gokart)));
-        mCardData.add(new HomeCardData("ashley_jenkins", "15 mins ago", "The Black Horse", "0.7 mi", "The drinks here are really good!!!",String.valueOf(R.drawable.post_bar)));
+        mCardData.add(new HomeCardData("ashley_jenkins", "15 mins ago", "The Black Horse", "1.8 mi", "The drinks here are really good!!!",String.valueOf(R.drawable.post_bar)));
         mAdapter.notifyDataSetChanged();
     }
 
