@@ -192,30 +192,7 @@ public class ChallengeFragmentBase extends Fragment {
                         i.setData(Uri.parse(url));
                         startActivityForResult(i, Constants.LAUNCH_UBER_REQUEST_CODE);
                     }
-                    FloatingActionButton uberFAB = (FloatingActionButton)getActivity().findViewById(R.id.uber_button);
-                    uberFAB.setVisibility(View.VISIBLE);
-                    final FABProgressCircle fabProgressCircle = (FABProgressCircle)getActivity().findViewById(R.id.fabProgressCircle);
-                    fabProgressCircle.show();
-                    Utils.isRiding = true;
-                    fabProgressCircle.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //TODO: Go to Trip Experiences page
-                        }
-                    });
-                    //after a while, uber arrives after a few seconds
-                    new Thread(new Runnable() {
-                        public void run() {
-                            try {
-                                Thread.sleep(60000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            fabProgressCircle.beginFinalAnimation();
-                            Utils.isRiding = false;
-                        }
-                    }).start();
-                    floatingUberButtonBehavior();
+                    floatingUberButtonBehavior(position);
                 }
             });
             inclusionViewGroup.addView(card);
@@ -223,7 +200,7 @@ public class ChallengeFragmentBase extends Fragment {
         return view;
     }
 
-    private void floatingUberButtonBehavior() {
+    private void floatingUberButtonBehavior(final int position) {
         try {
             PackageManager pm = getContext().getPackageManager();
             pm.getPackageInfo("com.ubercab", PackageManager.GET_ACTIVITIES);
@@ -238,28 +215,44 @@ public class ChallengeFragmentBase extends Fragment {
             i.setData(Uri.parse(url));
             startActivity(i);
         }
-        FloatingActionButton uberFAB = (FloatingActionButton)getActivity().findViewById(R.id.uber_button);
-        uberFAB.setVisibility(View.VISIBLE);
-        final FABProgressCircle fabProgressCircle = (FABProgressCircle)getActivity().findViewById(R.id.fabProgressCircle);
-        fabProgressCircle.show();
-        Utils.isRiding = true;
-        fabProgressCircle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: Go to Trip Experiences page
-
-            }
-        });
-        //after a while, uber arrives after a few seconds
-        new Thread(new Runnable() {
-            public void run() {
+        final FloatingActionButton uberFAB = (FloatingActionButton) getActivity().findViewById(R.id.uber_button);
+        new Thread(new Runnable(){
+            public void run(){
                 try {
-                    Thread.sleep(60000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                fabProgressCircle.beginFinalAnimation();
-                Utils.isRiding = false;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        uberFAB.setVisibility(View.VISIBLE);
+                        uberFAB.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity(), UberTripExperience.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("merchantName", placeHolderChallengeFavourites.get(position).merchaintName);
+                                intent.putExtras(bundle);
+                                getActivity().startActivity(intent);
+                            }
+                        });
+                        final FABProgressCircle fabProgressCircle = (FABProgressCircle) getActivity().findViewById(R.id.fabProgressCircle);
+                        fabProgressCircle.show();
+                        Utils.isRiding = true;
+                        new Thread(new Runnable(){
+                            public void run() {
+                                try {
+                                    Thread.sleep(60000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                fabProgressCircle.beginFinalAnimation();
+                                Utils.isRiding = false;
+                            }
+                        });
+                    }
+                });
             }
         }).start();
     }

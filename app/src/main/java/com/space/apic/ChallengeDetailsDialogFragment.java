@@ -120,20 +120,24 @@ public class ChallengeDetailsDialogFragment extends DialogFragment {
             i.setData(Uri.parse(url));
             startActivity(i);
         }
-        FloatingActionButton uberFAB = (FloatingActionButton) getActivity().findViewById(R.id.uber_button);
-        uberFAB.setVisibility(View.VISIBLE);
-        final FABProgressCircle fabProgressCircle = (FABProgressCircle) getActivity().findViewById(R.id.fabProgressCircle);
-        fabProgressCircle.show();
-        Utils.isRiding = true;
-        fabProgressCircle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: Go to Trip Experiences page
-            }
-        });
-        //after a while, uber arrives after a few seconds
-        new Thread(new Runnable() {
-            public void run() {
+        final FloatingActionButton uberFAB = (FloatingActionButton) getActivity().findViewById(R.id.uber_button);
+        new Thread(new Runnable(){
+           public void run(){
+               try {
+                   Thread.sleep(2000);
+               } catch (InterruptedException e) {
+                   e.printStackTrace();
+               }
+               uberFAB.setVisibility(View.VISIBLE);
+               final FABProgressCircle fabProgressCircle = (FABProgressCircle) getActivity().findViewById(R.id.fabProgressCircle);
+               fabProgressCircle.show();
+               Utils.isRiding = true;
+               fabProgressCircle.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       //TODO: Go to Trip Experiences page
+                   }
+               });
                 try {
                     Thread.sleep(60000);
                 } catch (InterruptedException e) {
