@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.github.jorgecastilloprz.FABProgressCircle;
+import com.github.jorgecastilloprz.listeners.FABProgressListener;
 
 import java.util.ArrayList;
 
@@ -114,6 +118,29 @@ public class ChallengeFragmentBase extends Fragment {
                         i.setData(Uri.parse(url));
                         startActivityForResult(i, Constants.LAUNCH_UBER_REQUEST_CODE);
                     }
+                    FloatingActionButton uberFAB = (FloatingActionButton)getActivity().findViewById(R.id.uber_button);
+                    uberFAB.setVisibility(View.VISIBLE);
+                    final FABProgressCircle fabProgressCircle = (FABProgressCircle)getActivity().findViewById(R.id.fabProgressCircle);
+                    fabProgressCircle.show();
+                    Utils.isRiding = true;
+                    fabProgressCircle.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //TODO: Go to Trip Experiences page
+                        }
+                    });
+                    //after a while, uber arrives after a few seconds
+                    new Thread(new Runnable() {
+                        public void run() {
+                            try {
+                                Thread.sleep(60000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            fabProgressCircle.beginFinalAnimation();
+                            Utils.isRiding = false;
+                        }
+                    }).start();
                 }
             });
             inclusionViewGroup.addView(card);

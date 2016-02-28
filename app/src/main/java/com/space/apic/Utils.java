@@ -16,6 +16,7 @@ public class Utils {
     public static String mostRecentChallengeClicked = null;
     public static boolean canReadStorage = false;
     public static Location lastKnownLocation = null;
+    public static boolean isRiding = false;
 
     public static String getUsername() {
         return "LaunchHackathon";
