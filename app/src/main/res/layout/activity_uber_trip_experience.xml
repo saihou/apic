@@ -5,8 +5,12 @@
     android:background="@color/uberActivityBackground"
     tools:context="com.space.apic.UberTripExperience">
 
+    <include layout="@layout/uber_toolbar"
+        android:id="@+id/toolbar"/>
+
     <VideoView
         android:id="@+id/video_player"
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
