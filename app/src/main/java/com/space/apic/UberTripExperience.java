@@ -1,17 +1,20 @@
 package com.space.apic;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +42,7 @@ public class UberTripExperience extends FragmentActivity {
     private Handler mHandler = new Handler();
     private ImageView car;
     private ArrayList<ChallengeCardData> data = new ArrayList<ChallengeCardData>();
+    private UberTripExperience activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,7 @@ public class UberTripExperience extends FragmentActivity {
         setContentView(R.layout.activity_uber_trip_experience);
 
         Bundle bundle = getIntent().getExtras();
-        String merchantName = bundle.getString("merchantName");
+        final String merchantName = bundle.getString("merchantName");
         TextView merchantLabel = (TextView) findViewById(R.id.merchant_name);
         merchantLabel.setText(merchantName);
 
@@ -95,6 +99,18 @@ public class UberTripExperience extends FragmentActivity {
         gallery.setItemAnimator(new FlipInRightYAnimator());
         gallery.getItemAnimator().setChangeDuration(3000);
         gallery.setAdapter(scaleAdapter);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                LayoutInflater inflater = activity.getLayoutInflater();
+                builder.setView(inflater.inflate(R.layout.chat,null));
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
     }
 
     public void createPlaceholderData(){
