@@ -183,8 +183,6 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             activeFragment = fragment;
-        } else if (id == R.id.nav_trip_experiences) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(com.space.apic.R.id.drawer_layout);
