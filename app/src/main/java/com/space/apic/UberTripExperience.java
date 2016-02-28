@@ -21,6 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
@@ -42,6 +44,11 @@ public class UberTripExperience extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uber_trip_experience);
+
+        Bundle bundle = getIntent().getExtras();
+        String merchantName = bundle.getString("merchantName");
+        TextView merchantLabel = (TextView) findViewById(R.id.merchant_name);
+        merchantLabel.setText(merchantName);
 
         VideoView video_player_view = (VideoView) findViewById(R.id.video_player);
         String fileName = "android.resource://"+  getPackageName() + "/raw/ubervideo";
