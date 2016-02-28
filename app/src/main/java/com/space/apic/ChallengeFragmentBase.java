@@ -69,18 +69,20 @@ public class ChallengeFragmentBase extends Fragment {
         for(int i = 0; i < placeHolderChallengeFavourites.size(); i++) {
             final int position = i;
             View card = LayoutInflater.from(getContext()).inflate(R.layout.challenge_card, null);
+            TextView merchantName = (TextView) card.findViewById(R.id.merchant_name);
+            TextView challengeDuration = (TextView) card.findViewById(R.id.challenge_duration);
+            merchantName.setText(placeHolderChallengeFavourites.get(i).merchaintName);
+            challengeDuration.setText(placeHolderChallengeFavourites.get(i).challengeDuration);
+
             Button favouriteButton = (Button) card.findViewById(R.id.challenge_later);
             Button joinButton = (Button) card.findViewById(R.id.challenge_join);
+            Button challengeDetailsButton = (Button) card.findViewById(R.id.challenge_details);
+            Button uberButton = (Button) card.findViewById(R.id.challenge_uber);
             if(pageType == "favourites_challenge") {
                 favouriteButton.setVisibility(View.GONE);
             } else if (pageType == "history_challenge") {
                 joinButton.setVisibility(View.GONE);
             }
-            TextView merchantName = (TextView) card.findViewById(R.id.merchant_name);
-            TextView challengeDuration = (TextView) card.findViewById(R.id.challenge_duration);
-            merchantName.setText(placeHolderChallengeFavourites.get(i).merchaintName);
-            challengeDuration.setText(placeHolderChallengeFavourites.get(i).challengeDuration);
-            Button challengeDetailsButton = (Button) card.findViewById(R.id.challenge_details);
             challengeDetailsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,6 +93,12 @@ public class ChallengeFragmentBase extends Fragment {
                     ChallengeDetailsDialogFragment challengeDetailsDialog = new ChallengeDetailsDialogFragment();
                     challengeDetailsDialog.setArguments(bundle);
                     challengeDetailsDialog.show(fm, "challenge_details_dialog");
+                }
+            });
+            uberButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+
                 }
             });
             inclusionViewGroup.addView(card);
