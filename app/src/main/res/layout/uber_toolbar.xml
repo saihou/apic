@@ -6,9 +6,10 @@
     android:elevation="4dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Uber Trip Experiences"
+        android:text="Uber Trip Experience"
+        android:gravity="center"
         android:textSize="18dp"
         android:textColor="@color/white"/>
 
